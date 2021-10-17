@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <HelloWorld/>
+    <router-view></router-view>
   </v-app>  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+//import Homepage from './components/Homepage';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    //Homepage
   },
 
   data: () => ({

@@ -1,6 +1,6 @@
 <template>
   <div>
-    Arvin P. Chu
+    Arvin P. Chu, Jemuel Anacio
   </div>
 </template>
 

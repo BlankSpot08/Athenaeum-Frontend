@@ -2,32 +2,32 @@
   <div id='body'>
     <div id='upper'>
         <h1 class='red--text text--accent-4 ml-16'>ATHENAEUM</h1>
-        <v-container class='py-15'><v-row class='py-16 my-1'></v-row></v-container>
+        <v-row class='py-16 my-16'></v-row>
 
         <h1  class='text-center'>Unlimited Books for education,<br> entertainment, and more.</h1><br>
         <v-container class='py-10'>
           <v-row align-content='center' justify='center'>
             <v-col cols='12' md='4' class='px-2'>
               <div class='text-center'>             
-                  <v-btn dark class='ma-3' elevation='1' height='150px' width='170px' color='red accent-4'>
+                  <v-btn dark to='/admin/login' class='ma-3' elevation='1' height='150px' width='170px' color='red accent-4'>
                     <v-icon size='220px'>
                       mdi-account-cog
                     </v-icon>
                   </v-btn>                            
               </div>   
-              <div class='text-center'>
+              <div class='text-center text-h5'>
                 Admin
               </div>          
             </v-col>
             <v-col cols='12'  md='4' class='px-2'>
               <div class='text-center'>
-                  <v-btn dark class='ma-3' elevation='1' height='150px' width='170px' color='red accent-4'>
+                  <v-btn dark  class='ma-3' elevation='1' height='150px' width='170px' color='red accent-4'>
                     <v-icon size='220px'>  
                       mdi-account-edit
                     </v-icon>
                   </v-btn> 
               </div>
-              <div class='text-center '>
+              <div class='text-center text-h5'>
                 Student
               </div>
             </v-col>

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main id='body'>
-      <v-container class="pb-11" id='upper' fluid>
+      <v-container class="pb-13" id='upper' fluid>
         <v-row class='pb-16 mb-16'>
           <v-col>
             <div class='red--text text--accent-4 ml-16 text-h4 font-weight-bold'>ATHENAEUM</div>

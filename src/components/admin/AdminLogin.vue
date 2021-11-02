@@ -5,7 +5,6 @@
         <v-row class='py-16 my-10'></v-row>
         <v-row align-content='center' jusify='center'>
           <v-col cols='12' align-self='center'>
-               
                 <v-card dark class="mx-auto pa-4" min-height='450px' max-width="500px" color='rgb(0,0,0,0.75)' >
                    <v-form  ref='form'>
                     <v-card-title class='text-h5 ma-n3  font-weight-bold'>
@@ -68,6 +67,7 @@
     
   }
 </script>
+
 <style scoped>
   h1, div, v-card{
     position: relative;
@@ -92,7 +92,6 @@
         right: 0px;
         bottom: 0px;
         left: 0px;
-        background-image: url('./assets/homepagebg.jpeg');
         background-size: 100% 100%;
         background-position: top center;
         

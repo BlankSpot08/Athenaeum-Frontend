@@ -109,12 +109,12 @@ const baseRoutes = [
         routes: [
             {
                 path: '/login',
-                name: 'login',
+                name: 'studentLogin',
                 component: StudentLogin
             },
             {
                 path: '/register',
-                name: 'register',
+                name: 'studentRegister',
                 component: StudentRegister
             },
             {

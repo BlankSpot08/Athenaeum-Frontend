@@ -16,7 +16,7 @@
                   </v-btn>                            
               </div>   
               <div class='text-center text-h5'>
-                Admin
+                Administrator
               </div>          
             </v-col>
             <v-col cols='12'  md='4' class='px-2'>

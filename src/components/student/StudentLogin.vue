@@ -59,7 +59,6 @@
         this.$router.push({name: name})
       },
       login() {
-        axios.get()
       }
     }
   }

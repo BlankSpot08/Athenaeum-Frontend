@@ -25,149 +25,117 @@ import StudentCategories from '../components/student/StudentCategories'
 import StudentMyList from '../components/student/StudentMyList'
 import StudentProfile from '../components/student/StudentProfile'
 
-
-const baseRoutes = [
-    {
-        basePath: '/',
-        routes: [
-            {
-                path: '',
-                name: 'homepage',
-                component: Homepage
-            }
-        ]
-    },
-    {
-        basePath: '/admin',
-        routes: [
-            {
-                path: '/login',
-                name: 'adminLogin',
-                component: AdminLogin
-            },
-            {
-                path: '/register',
-                name: 'adminRegister',
-                component: AdminRegister
-            },
-            {
-                path: '/',
-                name: 'admin',
-                component: Admin,
-                children: [
-                    {
-                        path: 'overview',
-                        name: 'Adminoverview',
-                        component: AdminOverview,
-                    },
-                    {
-                        path: 'book-entry',
-                        name: 'adminBookEntry',
-                        component: AdminBookEntry,
-                    },
-                    {
-                        path: 'borrow-confirmation',
-                        name: 'adminBorrowConfirmation',
-                        component: AdminBorrowConfirmation,
-                    },
-                    {
-                        path: 'return-confirmation',
-                        name: 'adminReturnConfirmation',
-                        component: AdminReturnConfirmation,
-                    },
-                    {
-                        path: 'book-entry',
-                        name: 'adminBookUpdate',
-                        component: AdminBookUpdate,
-                    },
-                    {
-                        path: 'book-search',
-                        name: 'adminBookSearch',
-                        component: AdminBookSearch,
-                    },
-                    {
-                        path: 'student-list',
-                        name: 'adminStudentList',
-                        component: AdminStudentList,
-                    },
-                    {
-                        path: 'admin-confirmation',
-                        name: 'adminAdminConfirmation',
-                        component: AdminAdminConfirmation,
-                    },
-                    {
-                        path: 'profile',
-                        name: 'adminProfile',
-                        component: AdminProfile,
-                    },
-                ]
-            }
-        ]
-    },
-    {
-        basePath: '/student',
-        routes: [
-            {
-                path: '/login',
-                name: 'studentLogin',
-                component: StudentLogin
-            },
-            {
-                path: '/register',
-                name: 'studentRegister',
-                component: StudentRegister
-            },
-            {
-                path: '/',
-                name: 'student',
-                component: Student,
-                children: [
-                    {
-                        path: 'home',
-                        name: 'studentHome',
-                        component: StudentHome,
-                    },
-                    {
-                        path: 'read-again',
-                        name: 'readAgain',
-                        component: StudentReadAgain,
-                    },
-                    {
-                        path: 'categories',
-                        name: 'studentCategories',
-                        component: StudentCategories,
-                    },
-                    {
-                        path: 'my-list',
-                        name: 'myList',
-                        component: StudentMyList,
-                    },
-                    {
-                        path: 'profile',
-                        name: 'studentProfile',
-                        component: StudentProfile,
-                    },
-                ]
-            }
-        ]
-    }
-]
-
-let routes = [];
-baseRoutes.forEach(baseRoute => {
-    let route = {};
-    baseRoute.routes.forEach(innerRoute => {
-        route = {
-            path: `${baseRoute.basePath}${innerRoute.path}`,
-            name: innerRoute.name,
-            component: innerRoute.component
-        };
-
-        routes.push(route);
-    })
-});
-
 Vue.use(Router)
 export default new Router ({
-    routes: routes
+    routes: [
+        {
+            path: '',
+            name: 'homepage',
+            component: Homepage
+        },
+        {
+            path: '/admin/login',
+            name: 'adminLogin',
+            component: AdminLogin
+        },
+        {
+            path: '/admin/register',
+            name: 'adminRegister',
+            component: AdminRegister
+        },
+        {
+            path: '/admin/',
+            name: 'admin',
+            component: Admin,
+            children: [
+                {
+                    path: 'overview',
+                    name: 'Adminoverview',
+                    component: AdminOverview,
+                },
+                {
+                    path: 'book-entry',
+                    name: 'adminBookEntry',
+                    component: AdminBookEntry,
+                },
+                {
+                    path: 'borrow-confirmation',
+                    name: 'adminBorrowConfirmation',
+                    component: AdminBorrowConfirmation,
+                },
+                {
+                    path: 'return-confirmation',
+                    name: 'adminReturnConfirmation',
+                    component: AdminReturnConfirmation,
+                },
+                {
+                    path: 'book-entry',
+                    name: 'adminBookUpdate',
+                    component: AdminBookUpdate,
+                },
+                {
+                    path: 'book-search',
+                    name: 'adminBookSearch',
+                    component: AdminBookSearch,
+                },
+                {
+                    path: 'student-list',
+                    name: 'adminStudentList',
+                    component: AdminStudentList,
+                },
+                {
+                    path: 'admin-confirmation',
+                    name: 'adminAdminConfirmation',
+                    component: AdminAdminConfirmation,
+                },
+                {
+                    path: 'profile',
+                    name: 'adminProfile',
+                    component: AdminProfile,
+                },
+            ]
+        },
+        {
+            path: '/student/login',
+            name: 'studentLogin',
+            component: StudentLogin
+        },
+        {
+            path: '/student/register',
+            name: 'studentRegister',
+            component: StudentRegister
+        },
+        {
+            path: '/student',
+            name: 'student',
+            component: Student,
+            children: [
+                {
+                    path: 'home',
+                    name: 'studentHome',
+                    component: StudentHome,
+                },
+                {
+                    path: 'read-again',
+                    name: 'studentReadAgain',
+                    component: StudentReadAgain,
+                },
+                {
+                    path: 'categories',
+                    name: 'studentCategories',
+                    component: StudentCategories,
+                },
+                {
+                    path: 'my-list',
+                    name: 'studentMyList',
+                    component: StudentMyList,
+                },
+                {
+                    path: 'profile',
+                    name: 'studentProfile',
+                    component: StudentProfile,
+                },
+            ]
+        }
+    ]
 })

@@ -1,99 +1,105 @@
 <template>
-    <div id='body'>
-      <div id='upper'>
-        <h1 class='red--text text--accent-4 ml-16'>ATHENAEUM</h1>
-        <v-row class='py-16 my-10'></v-row>
-        <v-row align-content='center' jusify='center'>
-          <v-col cols='12' align-self='center'>
-                <v-card dark class="mx-auto pa-4" min-height='450px' max-width="500px" color='rgb(0,0,0,0.75)' >
-                   <v-form  ref='form'>
-                    <v-card-title class='text-h5 ma-n3  font-weight-bold'>
-                      Login
-                    </v-card-title>
-                    <v-card-text class='mx-n3'>
-                      Please enter your ID Number and Password to access your Athenaeum account.
-                    </v-card-text>
-
-                    <v-text-field  dark label='ID Number' :rules='inputRules' v-model='id' class='py-4'></v-text-field >
-                    
-                    <v-text-field  dark label='Password' :rules='inputRules' v-model='password' class='py-4' type='password'></v-text-field>
-                    <v-card-actions>
-                      <v-btn block large elevation='2' class='mx-n2 mt-13' color='#D50000' @click='submit' >
-                        Login
-                      </v-btn>
-                    </v-card-actions>
-                    <v-card-actions class='my-n4'>
-                          <v-btn plain >Don't have an account yet?</v-btn>
-                          <v-btn plain>Forgot Password?</v-btn>
-                    </v-card-actions>
-                  </v-form>
-                </v-card>
-                
-                
-                <div class='text-center ma-1'>
-                  <v-btn plain dark to='/'>Cancel</v-btn>
-                </div>
-                
+  <v-app>
+    <v-main id='upper'>
+      <v-container fluid>
+        <v-row>
+          <v-col class="">
+            <div class='red--text text--accent-4 ml-16 text-h4 font-weight-bold'>ATHENAEUM</div>
           </v-col>
         </v-row>
         
+        <v-row class="mt-16 pt-16"  justify="center">
+          <v-col class="px-10 py-8" lg="4" id='loginBody'>
+            <div class="mb-6">
+              <div class="text-h6">Login</div>
+              <div class="text-body-2">Please enter your ID Number and Password to access your Athenaeum account.</div>
+            </div>
 
-      </div>
-    </div>
+            <v-form ref='form' class="py-4">
+              <div class="pb-2">
+                <v-text-field dark class="py-1 my-1" label="ID Number" :rules='inputRules' v-model='idNumber' v-bind:value="idNumber"></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="Password" :rules='inputRules' v-model='password' v-bind:value="password" type="password"></v-text-field>
+                <v-btn dark color='#D50000' @click="goToRouterLink('adminOverview')" block>Login</v-btn>
+              </div>
+
+              <v-container fluid>
+                <v-row class="text-body-2">
+                  <v-col class="pa-0 ">
+                    <a class="white--text" @click="goToRouterLink('adminRegister')">Don't have an account yet?</a>
+                  </v-col>
+                  <v-col class="pa-0 text-right">
+                    <a class="white--text">Forgot password?</a>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-col>
+        </v-row>
+        <v-row class="">
+          <v-col class="text-center">
+            <a class="white--text" @click="goToRouterLink('homepage')">Cancel</a>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
+
 <script>
+  // import axios from 'axios'
 
   export default {
     name: 'AdminLogin',
-    data(){
+    data() {
       return {
-        id: '',
+        idNumber: '',
         password: '',
-        inputRules: [
-          v => v.length>0 || 'This field required'
+        inputRules:[
+          v => v.length > 0 || 'This field required'
         ]
       }
     },
-  
     methods: {
-      submit() {
-        if(this.$refs.form.validate()){
-          console.log(this.id, this.password)
-        }
-         
-      }
-    },
+      goToRouterLink(name) {
+        this.$router.push({name: name})
+      },
+      // async login() {
+      //   if (this.$refs.form.validate()) {
+      //     const request = await axios.post('authentication/studentLogin', { id: this.idNumber, password: this.password })
 
-    
+      //     const status = request.status
+      //     if (status == 200) {
+      //       const token = request.data.accessToken
+      //       localStorage.setItem('token', JSON.stringify(token))
+
+      //       this.goToRouterLink("studentHome")
+      //     }
+      //   }
+      // }
+    }
   }
 </script>
 
-<style scoped>
-  h1, div, v-card{
-    position: relative;
+<style>
+  #loginBody{
+    background-color: rgba(0,0,0,0.5);
   }
-  h1{
-    font-size: 60px;
-  }
-  #body{
+  
+  #upper {
     position: relative;
     background-color: black;
     color: white;  
-    min-height: 970px  ;
   }
-  #upper{
-    position: relative;
-    min-height: 970px;
-  }
-  #upper::before{
+
+  #upper::before {
         content: '';
         position: absolute;
         top:0px;
-        right: 0px;
+        right: 0px; 
         bottom: 0px;
         left: 0px;
+        background-image: url('../../assets/homepagebg.jpeg');
         background-size: 100% 100%;
-        background-position: top center;
         
         opacity: 0.4; 
    }

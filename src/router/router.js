@@ -50,7 +50,7 @@ export default new Router ({
             children: [
                 {
                     path: 'overview',
-                    name: 'Adminoverview',
+                    name: 'adminOverview',
                     component: AdminOverview,
                 },
                 {

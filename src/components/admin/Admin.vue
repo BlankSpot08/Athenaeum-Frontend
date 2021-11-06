@@ -15,7 +15,7 @@
           <v-row>
             <v-col id="dropdownProfile">
               <div class="">
-                <a class="white--text text-subtitle-2">Account</a>
+                <a class="white--text text-subtitle-2" @click="goToRouterLink('adminProfile')">Account</a>
               </div>
               <div class="">
                 <a class="white--text text-subtitle-2" @click="logout()">Logout</a>
@@ -27,7 +27,7 @@
     </v-app-bar>
 
   <!-- navigation -->
-    <v-navigation-drawer absolute app permanent left dark color='black' id='border'>
+    <v-navigation-drawer fixed app permanent left dark color='black' id='border' >
       <template>
         <div class='pa-3 red--text text--accent-4 text-h5 text-center font-weight-bold' id='border'>
           ATHENAEUM
@@ -42,15 +42,19 @@
       
 
       <v-list>
-        <v-list-item v-for="item in items" :key="item.title" link class='my-n1'>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+        <v-list-item-group v-model='selectedItem' color='white'>
+          <v-list-item v-for="item in items" :key="item.title" link router :to='item.route' class='my-n1'>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+        
       </v-list>
       
     </v-navigation-drawer>   
@@ -65,20 +69,23 @@
     name: 'Admin',
     data () {
       return {
+        selectedItem: 1,
         items: [
-          { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-          { title: 'Book Entry', icon: 'mdi-book' },
-          { title: 'Borrow Confirmation', icon: 'mdi-book-open' },
-          { title: 'Return Confirmation', icon: 'mdi-hand-coin' },
-          { title: 'Book Update', icon: 'mdi-book-edit' },
-          { title: 'Book Search', icon: 'mdi-magnify' },
-          { title: 'Student List', icon: 'mdi-school' },
-          { title: 'Admin Confirmation', icon: 'mdi-account-cog' },
+          { title: 'Overview', icon: 'mdi-view-dashboard', route: '/admin/overview'},
+          { title: 'Book Entry', icon: 'mdi-book', route: '/admin/book-entry'},
+          { title: 'Borrow Confirmation', icon: 'mdi-book-open', route: '/admin/borrow-confirmation'},
+          { title: 'Return Confirmation', icon: 'mdi-hand-coin', route: '/admin/return-confirmation'},
+          { title: 'Book Update', icon: 'mdi-book-edit', route: '/admin/book-update'},
+          { title: 'Book Search', icon: 'mdi-magnify', route: '/admin/book-search'},
+          { title: 'Student List', icon: 'mdi-school', route: '/admin/student-list'},
+          { title: 'Admin Confirmation', icon: 'mdi-account-cog', route: '/admin/admin-confirmation'},
         ],
       }
     },
-    method: {
-
+    methods: {
+      goToRouterLink(name) {
+        this.$router.push({name: name})
+      },
     }
   }
 </script>

@@ -10,7 +10,7 @@
       <v-col v-for="j in maxCount" :key="j" class="px-0">
         <a v-if="(j - 1) <= temp[i - 1].books.data.length">
           <v-img :src="baseline + 'image/get/' + 
-            temp[i - 1].books.data[j - 1].image_path"
+            temp[i - 1].books.data[(j + (maxCount * (temp[i - 1].current - 1))) - 1].image_path"
             height="225" width="150" max-width="161" max-height="225"/>
         </a>
             <!-- temp[i - 1].books.data[(j + (maxCount * (temp[i - 1].current - 1))) - 1].image_path" -->

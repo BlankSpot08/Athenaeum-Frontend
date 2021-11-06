@@ -69,7 +69,7 @@ export default new Router ({
                     component: AdminReturnConfirmation,
                 },
                 {
-                    path: 'book-entry',
+                    path: 'book-update',
                     name: 'adminBookUpdate',
                     component: AdminBookUpdate,
                 },

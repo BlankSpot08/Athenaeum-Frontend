@@ -59,7 +59,7 @@
 
     <v-main>
       <v-container class="white--text px-0 mx-0 py-0 my-0" fluid>
-        <router-view class="px-10 py-10 px-16"/>
+        <router-view class=" px-10 py-10 px-16"/>
       </v-container>
     </v-main>
   </v-app>
@@ -100,7 +100,7 @@ import axios from 'axios'
 
 <style scoped>
   #navbar {
-    background-color: rgba(0, 0, 0, 1);
+    background-color:#101010;
   }
 
   #dropdownProfile {
@@ -113,6 +113,6 @@ import axios from 'axios'
 
   #body {
     position: relative;
-    background-color: black;
+    background-color: #101010;
   }
 </style>

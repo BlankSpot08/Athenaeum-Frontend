@@ -22,8 +22,11 @@ import Student from '../components/student/Student'
 import StudentHome from '../components/student/StudentHome'
 import StudentReadAgain from '../components/student/StudentReadAgain'
 import StudentCategories from '../components/student/StudentCategories'
+import StudentCategory from '../components/student/StudentCategory'
 import StudentMyList from '../components/student/StudentMyList'
 import StudentProfile from '../components/student/StudentProfile'
+import StudentPenalty from '../components/student/StudentPenalty'
+import StudentBook from '../components/student/StudentBook'
 
 Vue.use(Router)
 export default new Router ({
@@ -126,6 +129,11 @@ export default new Router ({
                     component: StudentCategories,
                 },
                 {
+                    path: 'category',
+                    name: 'studentCategory',
+                    component: StudentCategory
+                },
+                {
                     path: 'my-list',
                     name: 'studentMyList',
                     component: StudentMyList,
@@ -135,6 +143,16 @@ export default new Router ({
                     name: 'studentProfile',
                     component: StudentProfile,
                 },
+                {
+                    path: 'penalty',
+                    name: 'studentPenalty',
+                    component: StudentPenalty,
+                },
+                {
+                    path: 'book',
+                    name: 'studentBook',
+                    component: StudentBook
+                }
             ]
         }
     ]

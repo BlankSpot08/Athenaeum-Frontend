@@ -40,8 +40,9 @@
       </div>
       <p class='text-center'>Arvin chu</p>
       
+      <v-divider />
 
-      <v-list>
+      <v-list class="">
         <v-list-item-group v-model='selectedItem' color='white'>
           <v-list-item v-for="item in items" :key="item.title" link router :to='item.route' class='my-n1'>
 
@@ -85,6 +86,11 @@
     methods: {
       goToRouterLink(name) {
         this.$router.push({name: name})
+      },
+      logout() {
+        localStorage.removeItem("token")
+
+        this.goToRouterLink("homepage")
       },
     }
   }

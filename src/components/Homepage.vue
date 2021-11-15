@@ -74,7 +74,7 @@
         <v-row class=" px-16 py-16" justify="right">
           <v-col class=" justify-end ">
             <div class="pl-16">
-              <v-img class="" src="../assets/favorite_book.jpg" height="250" width="400" max-height="400" max-width="400"/>
+              <v-img class="ml-auto" src="../assets/favorite_book.jpg" height="250" width="400" max-height="400" max-width="400"/>
             </div>
           </v-col>
 

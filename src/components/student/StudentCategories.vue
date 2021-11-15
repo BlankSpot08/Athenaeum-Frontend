@@ -10,7 +10,7 @@
 
     <v-row v-for="(category, index) in categorySources" :key="index" class="pa-0">
       <v-col class="px-0" v-for="(pic, index) in category" :key=index lg="3" md="2">
-        <a class="">
+        <a class="" @click="goToCategoryLink('studentCategory', pic.title)">
           <v-img :src="require(`@/assets/${pic.link}`)" height="250" width="330" max-height="400" max-width="400">
             <v-container class="fill-height" fluid>
               <v-row>
@@ -26,11 +26,14 @@
 
   </v-container>
 </template>
+
 <script>
   export default {
     name: 'StudentCategories',
-    method: {
-
+    methods: {
+      goToCategoryLink(name, title) {
+        this.$router.push({ name: name, query: { name: title } })
+      }
     },
     data() {
       return {
@@ -56,7 +59,7 @@
           [
             { link: "socialscience.jpg", title: 'Social Science' },
             { link: "technology.jpg", title: 'Technology' },
-            { link: "arts.jpg", title: 'Arts' }
+            { link: "arts.jpg", title: 'The Arts' }
           ]
         ]
       }

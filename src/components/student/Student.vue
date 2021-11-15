@@ -35,7 +35,9 @@
       <v-menu class="pa-0 ma-0" open-on-hover bottom offset-y>
         <template class="" v-slot:activator="{ on, attrs }">
           <div class="" v-bind="attrs" v-on="on">
-            <a class="white--text text-subtitle-1">{{student.data.lastname}}, {{student.data.firstname}}</a>
+            <a class="white--text text-subtitle-1">
+              {{student.data.lastname}}, {{student.data.firstname}}
+            </a>
             <v-icon dark>
               mdi-menu-down
             </v-icon>

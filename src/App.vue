@@ -5,17 +5,8 @@
 </template>
 
 <script>
-//import Homepage from './components/Homepage';
 
 export default {
-  name: 'App',
-
-  components: {
-    //Homepage
-  },
-
-  data: () => ({
-    //
-  }),
+  name: 'App'
 };
 </script>

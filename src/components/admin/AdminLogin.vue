@@ -19,7 +19,7 @@
               <div class="pb-2">
                 <v-text-field dark class="py-1 my-1" label="ID Number" :rules='inputRules' v-model='idNumber' v-bind:value="idNumber"></v-text-field>
                 <v-text-field dark class="py-1 my-1" label="Password" :rules='inputRules' v-model='password' v-bind:value="password" type="password"></v-text-field>
-                <v-btn dark color='#D50000' @click="goToRouterLink('adminOverview')" block>Login</v-btn>
+                <v-btn dark color='#D50000' @click="login()" block>Login</v-btn>
               </div>
 
               <v-container fluid>
@@ -46,14 +46,14 @@
 </template>
 
 <script>
-  // import axios from 'axios'
+  import axios from 'axios'
 
   export default {
     name: 'AdminLogin',
     data() {
       return {
-        idNumber: '',
-        password: '',
+        idNumber: '19-11691-944',
+        password: '09997874755',
         inputRules:[
           v => v.length > 0 || 'This field required'
         ]
@@ -63,19 +63,21 @@
       goToRouterLink(name) {
         this.$router.push({name: name})
       },
-      // async login() {
-      //   if (this.$refs.form.validate()) {
-      //     const request = await axios.post('authentication/studentLogin', { id: this.idNumber, password: this.password })
+      async login() {
+        if (this.$refs.form.validate()) {
+          const request = await axios.post('authentication/adminLogin', 
+            { id: this.idNumber, password: this.password }
+          )
 
-      //     const status = request.status
-      //     if (status == 200) {
-      //       const token = request.data.accessToken
-      //       localStorage.setItem('token', JSON.stringify(token))
+          const status = request.status
+          if (status == 200) {
+            const token = request.data.accessToken
+            localStorage.setItem('token', JSON.stringify(token))
 
-      //       this.goToRouterLink("studentHome")
-      //     }
-      //   }
-      // }
+            this.goToRouterLink("adminOverview")
+          }
+        }
+      }
     }
   }
 </script>

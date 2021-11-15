@@ -17,8 +17,8 @@
 
             <v-form ref='form' class="py-4">
               <div class="pb-2">
-                <v-text-field dark class="py-1 my-1" label="ID Number" v-model='idNumber'  :rules='inputRules'></v-text-field>
-                <v-text-field dark class="py-1 my-1" label="Email" v-model='email' :rules='inputRules' ></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="ID Number" v-model='id'  :rules='inputRules'></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="Email" v-model='emailaddress' :rules='inputRules' ></v-text-field>
                 <v-text-field dark class="py-1 my-1" label="Password" v-model='password' :rules='passwordRules' type='password'></v-text-field>
                 <v-text-field dark class="py-1 my-1" label="Confirm Password" v-model='confirmPassword' :rules='confirmPasswordRules' type='password'></v-text-field>
                 <v-btn dark color='#D50000' @click='next()' block>Next</v-btn>
@@ -35,9 +35,9 @@
             </div>
             <v-form ref='form' class="py-4">
               <div class="pb-2">
-                <v-text-field dark class="py-1 my-1" label="First Name" :rules='inputRules' v-model='firstName'></v-text-field>
-                <v-text-field dark class="py-1 my-1" label="Middle Name" :rules='inputRules' v-model='middleName'></v-text-field>
-                <v-text-field dark class="py-1 my-1" label="Last Name" :rules='inputRules' v-model='lastName'></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="First Name" :rules='inputRules' v-model='firstname'></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="Middle Name" :rules='inputRules' v-model='middlename'></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="Last Name" :rules='inputRules' v-model='lastname'></v-text-field>
                 <v-btn dark color='#D50000' @click='next()' block>Next</v-btn>
               </div>
             </v-form>
@@ -53,7 +53,7 @@
             <v-form ref='form' class="py-4">
               <div class="pb-2">
                 <v-text-field dark class="py-1 my-1" label="Contact No." :rules='inputRules' v-model='contact'></v-text-field>
-                <v-btn dark color='#D50000' block>Submit</v-btn>
+                <v-btn dark color='#D50000' @click="register()" block>Submit</v-btn>
               </div>
             </v-form>
           </v-col>
@@ -64,12 +64,12 @@
             <a class="white--text mr-5" @click="back">Back</a>
           </v-col>
           <v-col class="text-left">
-            <a class="white--text ml-5" @click="goToRouterLink('studentLogin')">Cancel</a>
+            <a class="white--text ml-5" @click="goToRouterLink('adminLogin')">Cancel</a>
           </v-col>
         </v-row>
         <v-row v-if='process==1'>
           <v-col class="text-center">
-            <a class="white--text" @click="goToRouterLink('studentLogin')">Cancel</a>
+            <a class="white--text" @click="goToRouterLink('adminLogin')">Cancel</a>
           </v-col>
         </v-row>
       </v-container>
@@ -78,20 +78,20 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     name: 'AdminRegister',
     data() {
       return {
-        idNumber: '',
-        email: '',
+        id: '',
+        emailaddress: '',
         password: '',
         confirmPassword: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        contact: '',
-        guardianContact: '',
-
+        firstname: '',
+        middlename: '',
+        lastname: '',
+        contact: '',  
         inputRules:[
           v => v.length>0 || 'This field required'
         ],
@@ -106,7 +106,22 @@
       }
     },
     methods: {
-      
+      async register() {
+        await axios.post('registration/adminRegister',
+          {
+            id: this.id,
+            password: this.password,
+            firstname: this.firstname,
+            middlename: this.middlename,
+            lastname: this.lastname,
+            emailaddress: this.emailaddress,
+            contactno: this.contactno,
+            guardiancontactno: this.guardiancontactno,
+          }
+        )
+
+        this.$router.push({name: 'homepage'})
+      },
       goToRouterLink(name) {
         this.$router.push({name: name})
       },

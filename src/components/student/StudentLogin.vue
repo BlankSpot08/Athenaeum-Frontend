@@ -66,7 +66,9 @@
       },
       async login() {
         if (this.$refs.form.validate()) {
-          const request = await axios.post('authentication/studentLogin', { id: this.idNumber, password: this.password })
+          const request = await axios.post('authentication/studentLogin', 
+            { id: this.idNumber, password: this.password }
+          )
 
           const status = request.status
           if (status == 200) {

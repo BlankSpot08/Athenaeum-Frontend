@@ -18,7 +18,7 @@
             <v-form ref='form' class="py-4">
               <div class="pb-2">
                 <v-text-field dark class="py-1 my-1" label="ID Number" v-model='idNumber'  :rules='inputRules'></v-text-field>
-                <v-text-field dark class="py-1 my-1" label="Email" v-model='email' :rules='inputRules' ></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="Email" v-model='emailaddress' :rules='inputRules' ></v-text-field>
                 <v-text-field dark class="py-1 my-1" label="Password" v-model='password' :rules='passwordRules' type='password'></v-text-field>
                 <v-text-field dark class="py-1 my-1" label="Confirm Password" v-model='confirmPassword' :rules='confirmPasswordRules' type='password'></v-text-field>
                 <v-btn dark color='#D50000' @click='next()' block>Next</v-btn>
@@ -35,9 +35,9 @@
             </div>
             <v-form ref='form' class="py-4">
               <div class="pb-2">
-                <v-text-field dark class="py-1 my-1" label="First Name" :rules='inputRules' v-model='firstName'></v-text-field>
-                <v-text-field dark class="py-1 my-1" label="Middle Name" :rules='inputRules' v-model='middleName'></v-text-field>
-                <v-text-field dark class="py-1 my-1" label="Last Name" :rules='inputRules' v-model='lastName'></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="First Name" :rules='inputRules' v-model='firstname'></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="Middle Name" :rules='inputRules' v-model='middlename'></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="Last Name" :rules='inputRules' v-model='lastname'></v-text-field>
                 <v-btn dark color='#D50000' @click='next()' block>Next</v-btn>
               </div>
             </v-form>
@@ -52,9 +52,9 @@
             </div>
             <v-form ref='form' class="py-4">
               <div class="pb-2">
-                <v-text-field dark class="py-1 my-1" label="Contact No." :rules='inputRules' v-model='contact'></v-text-field>
-                <v-text-field dark class="py-1 my-1" label="Guadrdian Contact No." :rules='inputRules' v-model='guardianContact'></v-text-field>
-                <v-btn dark color='#D50000' block>Submit</v-btn>
+                <v-text-field dark class="py-1 my-1" label="Contact No." :rules='inputRules' v-model='contactno'></v-text-field>
+                <v-text-field dark class="py-1 my-1" label="Guadrdian Contact No." :rules='inputRules' v-model='guardiancontactno'></v-text-field>
+                <v-btn dark color='#D50000' block @click="register()">Submit</v-btn>
               </div>
             </v-form>
           </v-col>
@@ -79,35 +79,52 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     name: 'StudentRegister',
     data() {
       return {
         idNumber: '',
-        email: '',
+        emailaddress: '',
         password: '',
         confirmPassword: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        contact: '',
-        guardianContact: '',
+        firstname: '',
+        lastname: '',
+        middlename: '',
+        contactno: '',
+        guardiancontactno: '',
 
         inputRules:[
-          v => v.length>0 || 'This field required'
+          v => v.length > 0 || 'This field required'
         ],
         passwordRules:[
-          v => v.length>5 || 'Must contain atleast 6 characters'
+          v => v.length > 5 || 'Must contain atleast 6 characters'
         ],
         confirmPasswordRules:[
-          v => (v==this.password&&v.length>0)|| 'Password mismatch'
+          v => (v == this.password && v.length > 0)|| 'Password mismatch'
         ],
 
         process: 1
       }
     },
     methods: {
-      
+      async register() {
+        await axios.post('registration/studentRegister',
+          {
+            id: this.idNumber,
+            password: this.password,
+            firstname: this.firstname,
+            middlename: this.middlename,
+            lastname: this.lastname,
+            emailaddress: this.emailaddress,
+            contactno: this.contactno,
+            guardiancontactno: this.guardiancontactno,
+          }
+        )
+
+        this.$router.push({name: 'homepage'})
+      },
       goToRouterLink(name) {
         this.$router.push({name: name})
       },

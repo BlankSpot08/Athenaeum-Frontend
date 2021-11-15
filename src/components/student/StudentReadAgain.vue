@@ -10,9 +10,12 @@
 
     <v-row v-for="i in rows" :key="i" class="mb-10 ">
       <v-col v-for="j in maxCount" :key="j" class="px-0 ">
-        <a>
+        <a
+          v-if="((j + (maxCount * (i - 1))) - 1) < books.data.length"
+          @click="goToBookLink('studentBook', books.data[(j + (maxCount * (i - 1))) - 1].book.isbn_number)"
+        >
           <v-img :src="baseline + 'image/get/' + 
-            books.data[j - 1].book.image_path"
+            books.data[((j + (maxCount * (i - 1))) - 1)].book.image_path"
             height="225" width="150" max-width="161" max-height="225"/>
         </a>
       </v-col>
@@ -33,6 +36,9 @@
       }
     },
     methods: {
+      goToBookLink(name, id) {
+        this.$router.push({name: name, query: { id: id }})
+      },
       async getReadAgainBooksOfStudent() {
         const token = JSON.parse(localStorage.getItem('token'))
         
@@ -46,7 +52,6 @@
       console.log(this.books)
 
       this.rows = Math.ceil(this.books.data.length / this.maxCount)
-      console.log(this.rows)
     }
 
   }

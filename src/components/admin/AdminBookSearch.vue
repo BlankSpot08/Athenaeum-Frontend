@@ -19,9 +19,7 @@
             <v-btn class='mx-3 mt-n8' width='200' color='#D50000' x-large>Search</v-btn>
           </v-card-actions>
      
-
-            <v-simple-table fixed-header light height='360' class='ma-5 
-            ' >
+            <v-simple-table fixed-header light height='360' class='ma-5' >
               <template v-slot:default >
                 <thead >
                   <tr>
@@ -70,16 +68,18 @@
     </v-container>
 </template>
 <script>
+  // import axios from 'axios'
+
   export default {
     name: 'AdminBookSearch',
     method: {
-
+      async getAllBooks() {
+        // const books = axios.get('admin/getAllBooks')
+      }
     },
     data() {
       return {
-        book: {
-          author: []
-        }
+        book: {}
       }
     }
   }

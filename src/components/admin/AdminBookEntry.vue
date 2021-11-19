@@ -19,23 +19,41 @@
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-file-input 
-              class='mx-1' 
-              placeholder="Select your files" 
-              :rules="rules" 
-              accept="image/png, image/jpeg, image/bmp" 
-              prepend-icon="mdi-image" 
-              label="Upload Book Cover">
-            </v-file-input>
+            <v-col class="ma-n3">
+              <v-img 
+                src="@/assets/adventure.jpg"
+                height="395" 
+                width="285"
+                max-height="550"
+                max-width="311">
+              >
+              </v-img>
+            </v-col>
           </v-card-actions>
-          <v-card-actions class='my-n5'>
-            <v-textarea 
-              class='mx-1' 
-              background-color='white' 
-              light label='Synopsis' 
-              placeholder="Type the synopsis" 
-              filled>
-            </v-textarea>
+
+          <v-card-actions class='my-n8'>
+            <v-col class="ma-n3">
+              <v-file-input 
+                class="mx-1"
+                placeholder="Select your files" 
+                :rules="rules" 
+                accept="image/png, image/jpeg, image/bmp" 
+                prepend-icon="mdi-image" 
+                label="Upload Book Cover">
+              </v-file-input>
+            </v-col>
+            
+            <v-col class="ma-n3">
+              <v-text-field 
+                class="mx-1"
+                background-color='white' 
+                light label='Publisher' 
+                placeholder="Type the publisher's name" 
+                filled>
+              </v-text-field>
+            </v-col>
+
+            
           </v-card-actions>
           <v-card-actions class='my-n8'>
             <v-text-field 
@@ -46,14 +64,11 @@
               placeholder='Type the ISBN'
               filled>
             </v-text-field>
+
             <v-text-field 
-              class='mx-1' 
-              background-color='white' 
-              light label='Publisher' 
-              placeholder="Type the publisher's name" 
-              filled>
-            </v-text-field>
+              class='mx-1' background-color='white' light label='Publisher - Email' placeholder="Type the publisher's email" filled></v-text-field>
           </v-card-actions>
+
           <v-card-actions class='my-n8'>
             <v-text-field 
               class='mx-1' 
@@ -63,32 +78,26 @@
               placeholder="Type the book's edition" 
               filled>
             </v-text-field>
-            <v-text-field 
-              class='mx-1' background-color='white' light label='Publisher - Email' placeholder="Type the publisher's email" filled></v-text-field>
-          </v-card-actions>
-          <v-card-actions class='my-n8'>
-            <v-text-field class='mx-1' background-color='white' light label='Title' placeholder="Type the book's title" filled></v-text-field>
+
             <v-text-field class='mx-1' background-color='white' light label='Publisher - Address' placeholder="Type the publisher's address" filled></v-text-field>
           </v-card-actions>
+
+          <v-card-actions class='my-n8'>
+            <v-col class='ma-n3'>
+              <v-text-field class='mx-1' background-color='white' light label='Title' placeholder="Type the book's title" filled></v-text-field>
+            </v-col>
+
+            <v-col class='ma-n3'>
+              <v-text-field  class='mx-1' background-color='white' light label='Publisher - Contact Number' placeholder="Type the publisher's contact number" filled></v-text-field>
+            </v-col> 
+          </v-card-actions>
+
           <v-card-actions class='my-n8'>
             <v-col class='ma-n3'>
               <v-combobox class='mx-1'  v-model='start' :items="items" light background-color='white' label='Category'  filled> 
               </v-combobox>
             </v-col>
-            <v-col class='ma-n3'>
-              <v-text-field  class='mx-1' background-color='white' light label='Publisher - Contact Number' placeholder="Type the publisher's contact number" filled></v-text-field>
-            </v-col> 
-          </v-card-actions>
-          <v-card-actions class='my-n8'>
-            <v-col class='ma-n3'>
-              <v-combobox class='mx-1' height='10' background-color='white' light v-model="chips" chips clearable label="Tags" multiple filled>
-                <template v-slot:selection="{ attrs, item, select, selected }">
-                  <v-chip v-bind="attrs" :input-value="selected" close @click="select" @click:close="remove(item)">
-                    <strong>{{ item }}</strong>&nbsp;
-                  </v-chip>
-                </template>
-              </v-combobox>
-            </v-col>
+            
             <v-col class='ma-n3'>
               <v-menu >
                 <template v-slot:activator="{on}">
@@ -98,11 +107,19 @@
               </v-menu>
             </v-col>
           </v-card-actions>
+
           <v-card-actions class='my-n8'>
-            <v-text-field class='mx-1' background-color='white' light label='Call Number' placeholder="Type the book's call number" filled></v-text-field>
+            <v-combobox class='mx-1' height='10' background-color='white' light v-model="chips" chips clearable label="Tags" multiple filled>
+              <template v-slot:selection="{ attrs, item, select, selected }">
+                <v-chip v-bind="attrs" :input-value="selected" close @click="select" @click:close="remove(item)">
+                  <strong>{{ item }}</strong>&nbsp;
+                </v-chip>
+              </template>
+            </v-combobox>
             <!-- temporary(Author) -->
-            <v-text-field class='mx-1' background-color='white' light label='Author' placeholder="Type the author's name" filled></v-text-field>   
+            <!-- <v-text-field class='mx-1' background-color='white' light label='Author' placeholder="Type the author's name" filled></v-text-field>    -->
           </v-card-actions>
+
           <v-card-actions class='my-n8'>
             <v-col class='ma-n3'>
               <v-menu >
@@ -112,17 +129,34 @@
                 <v-date-picker v-model='dateOfRegister'></v-date-picker>
               </v-menu>
             </v-col>
+
             <v-col class='ma-n3'>
-              <v-text-field class='mx-1' background-color='white' light label='Author - Email' placeholder="Type the author's email" filled></v-text-field> 
+              <!-- <v-text-field class='mx-1' background-color='white' light label='Author - Email' placeholder="Type the author's email" filled></v-text-field>  -->
             </v-col>
           </v-card-actions>
+
+          <v-card-actions class='my-n8'>
+            <v-text-field class='mx-1' background-color='white' light label='Call Number' placeholder="Type the book's call number" filled></v-text-field>
+            <!-- <v-text-field class='mx-1' background-color='white' light label='Author - Address' placeholder="Type the author's address" filled></v-text-field> -->
+          </v-card-actions>
+
           <v-card-actions class='my-n8'>
             <v-text-field class='mx-1' background-color='white' light label='Registered By' placeholder="Type your name" filled></v-text-field> 
-            <v-text-field class='mx-1' background-color='white' light label='Author - Address' placeholder="Type the author's address" filled></v-text-field>
+            <!-- <v-text-field class='mx-1 mb-4' background-color='white' light label='Author - Contact Number' placeholder="Type the author's contact number" outlined></v-text-field> -->
           </v-card-actions>
+
           <v-card-actions class='my-n8'>
             <v-text-field class='mx-1 mb-4' background-color='white' light label='Price' placeholder="Type the book's price" filled></v-text-field> 
-            <v-text-field class='mx-1 mb-4' background-color='white' light label='Author - Contact Number' placeholder="Type the author's contact number" outlined></v-text-field>
+          </v-card-actions>
+
+          <v-card-actions class='my-n5'>
+            <v-textarea 
+              class='mx-1' 
+              background-color='white' 
+              light label='Synopsis' 
+              placeholder="Type the synopsis" 
+              filled>
+            </v-textarea>
           </v-card-actions>
           <v-card-actions class='ma-2'>
             <v-btn block color='#D50000' >

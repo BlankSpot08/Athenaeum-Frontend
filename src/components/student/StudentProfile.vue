@@ -17,7 +17,7 @@
 
           <!-- Account Information -->
           <v-row class="pb-8" id="division">
-            <v-col class="text-body-2 pl-0 " lg="3" md="3">
+            <v-col class="text-body-2 pl-0" lg="3" md="3">
               Account Information
             </v-col>
 
@@ -747,7 +747,7 @@
                                         </v-btn>
                                       </v-col>
                                       <v-col>
-                                        <v-btn @click="cancelBorrow(value)" >
+                                        <v-btn @click="cancelReturn(value)" >
                                           Confirm
                                         </v-btn>
                                       </v-col>
@@ -805,7 +805,7 @@
   export default {
     name: 'StudentProfile',
     methods: {
-      async cancelRequest(book) {
+      async cancelReturn(book) {
         const token = JSON.parse(localStorage.getItem('token'))
 
         axios.post('student/cancelReturnRequest', 

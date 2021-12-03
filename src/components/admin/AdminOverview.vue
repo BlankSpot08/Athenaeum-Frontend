@@ -1,14 +1,14 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="">
     <v-row align-content='start'>
       <v-icon dark>
         mdi-view-dashboard
       </v-icon>
-      <div class='pa-5 font-weight-bold text-h6'>
+      <div class='pa-5 font-weight-bold text-h5'>
         Overview  
       </div>
     </v-row>
-    <v-row justify='center' class='ma-3'>
+    <v-row justify='center' class='ma-1'>
       <!-- column 1 -->
     
       <v-col class='mx-n10' col='3'>
@@ -26,7 +26,7 @@
                   </v-list-item-content>
 
                   <v-list-item-content>
-                    <v-list-item-title class='text-subtitle-1 text-wrap '>{{ item.description }}</v-list-item-title>
+                    <v-list-item-title class='text-body-2 text-wrap '>{{ item.description }}</v-list-item-title>
                   </v-list-item-content>
                 </div>                       
               </v-card>  
@@ -81,7 +81,6 @@
                     <v-list-item-title class='text-subtitle-1 text-wrap'>{{ item.description }}</v-list-item-title>
                   </v-list-item-content>
                 </div>            
-                    
               </v-card>  
             </v-list-item>
           </v-list-item-group>
@@ -99,21 +98,19 @@
         selectedItem: 1,
         items: [
           { title: 'Book Entry', icon: 'mdi-book', description: 'Add books in the library.', route: '/admin/book-entry'},
-          { title: 'Book Update', icon: 'mdi-book-edit', description: 'Update book information, and quantity.', route: '/admin/book-update'},
-          { title: 'Admin Confirmation', icon: 'mdi-account-cog', description: "Confirm other admin's registration, to add them as admins too.", route: '/admin/admin-confirmation'},
+          { title: 'Book List', icon: 'mdi-book-edit', description: 'Update book information, and quantity.', route: '/admin/book-list'},
         ],
         items2: [
           { title: 'Borrow Confirmation', icon: 'mdi-book-open', description: "Confirmation of student's borrow request.", route: '/admin/borrow-confirmation'},
-          { title: 'Book Search', icon: 'mdi-magnify', description: 'Search books that you want to find.', route: '/admin/book-search'},
+          { title: 'Student List', icon: 'mdi-school', description: 'Showing the list of students registered in the library.', route: '/admin/student-list'},
         ],
         items3: [
           { title: 'Return Confirmation', icon: 'mdi-hand-coin', description: 'Confirmation of books returned to library.', route: '/admin/return-confirmation'},
-          { title: 'Student List', icon: 'mdi-school', description: 'Showing the list of students registered in the library.', route: '/admin/student-list'},
-
+          { title: 'Admin Confirmation', icon: 'mdi-account-cog', description: "Confirm other admin's registration, to add them as admins too.", route: '/admin/admin-confirmation'},
         ]
       }
     },
-    method: {
+    methods: {
       
     }
   }

@@ -10,8 +10,8 @@ import AdminOverview from '../components/admin/AdminOverview'
 import AdminBookEntry from '../components/admin/AdminBookEntry'
 import AdminBorrowConfirmation from '../components/admin/AdminBorrowConfirmation'
 import AdminReturnConfirmation from '../components/admin/AdminReturnConfirmation'
+import AdminBookList from '../components/admin/AdminBookList'
 import AdminBookUpdate from '../components/admin/AdminBookUpdate'
-import AdminBookSearch from '../components/admin/AdminBookSearch'
 import AdminStudentList from '../components/admin/AdminStudentList'
 import AdminAdminConfirmation from '../components/admin/AdminAdminConfirmation'
 import AdminProfile from '../components/admin/AdminProfile'
@@ -27,9 +27,11 @@ import StudentMyList from '../components/student/StudentMyList'
 import StudentProfile from '../components/student/StudentProfile'
 import StudentPenalty from '../components/student/StudentPenalty'
 import StudentBook from '../components/student/StudentBook'
+import StudentSearch from '../components/student/StudentSearch'
 
 Vue.use(Router)
-export default new Router ({
+
+export default new Router({
     routes: [
         {
             path: '',
@@ -72,14 +74,14 @@ export default new Router ({
                     component: AdminReturnConfirmation,
                 },
                 {
-                    path: 'book-update',
-                    name: 'adminBookUpdate',
-                    component: AdminBookUpdate,
+                    path: 'book-list',
+                    name: 'adminBookList',
+                    component: AdminBookList,
                 },
                 {
-                    path: 'book-search',
-                    name: 'adminBookSearch',
-                    component: AdminBookSearch,
+                    path: 'book-update/:isbn',
+                    name: 'adminBookUpdate',
+                    component: AdminBookUpdate,
                 },
                 {
                     path: 'student-list',
@@ -129,7 +131,7 @@ export default new Router ({
                     component: StudentCategories,
                 },
                 {
-                    path: 'category',
+                    path: 'category/:name',
                     name: 'studentCategory',
                     component: StudentCategory
                 },
@@ -149,9 +151,14 @@ export default new Router ({
                     component: StudentPenalty,
                 },
                 {
-                    path: 'book',
+                    path: 'book/:isbn',
                     name: 'studentBook',
                     component: StudentBook
+                },
+                {
+                    path: 'search',
+                    name: 'studentSearch',
+                    component: StudentSearch
                 }
             ]
         }

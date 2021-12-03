@@ -1,76 +1,215 @@
 <template>
-    <v-container fluid>
-      <v-row align-content='start'>
-        <v-icon dark>
-          mdi-school
-        </v-icon>
-        <div class='pa-5 font-weight-bold text-h6'>
-          Student List  
-        </div>
-      </v-row>
-      <v-row class='mb-7'>
-        <v-card class='ma-0' color='#262626' id='cards' dark width='1500'>
-          <v-card-subtitle class='text-subtitle-1 font-weight-bold'>
-            Search student name or ID number
-          </v-card-subtitle>
+  <v-container fluid>
+    <v-row align-content="start">
+      <v-icon dark> mdi-school </v-icon>
+      <div class="pa-5 font-weight-bold text-h6">Student List</div>
+    </v-row>
+    <v-row class="mb-7">
+      <v-card class="ma-0" color="#262626" id="cards" dark width="1500">
+        <v-card-actions class="mt-8">
+          <v-text-field
+            class="mx-3 mt-n5"
+            label="Search ID number"
+            background-color="white"
+            light
+            filled
+          ></v-text-field>
+          <v-text-field
+            class="mx-3 mt-n5"
+            label="Search Student's Name"
+            background-color="white"
+            light
+            filled
+          ></v-text-field>
+          <v-text-field
+            class="mx-3 mt-n5"
+            label="Search Email Address"
+            background-color="white"
+            light
+            filled
+          ></v-text-field>
+        </v-card-actions>
+        <v-card-actions class="mt-0">
+          <v-col>
+            <v-text-field
+              class="mt-n10"
+              label="Search Contact No."
+              background-color="white"
+              light
+              filled
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              class="mt-n10"
+              label="Search Guardian Contact No."
+              background-color="white"
+              light
+              filled
+            ></v-text-field>
+          </v-col>
+          <v-col class="text-right">
+            <v-btn class="mt-n15" width="200" color="#D50000" x-large
+              >Search</v-btn
+            >
+          </v-col>
+        </v-card-actions>
+        <v-card-subtitle class="ml-1 mt-n10 mb-n8 text-subtitle-1">
+          Student List
+        </v-card-subtitle>
 
-          <v-card-actions>
-            <v-text-field class='mx-3 mt-n5 mb-n4' background-color='white' light filled ></v-text-field>
-            <v-btn class='mx-3 mt-n8' width='200' color='#D50000' x-large>Search</v-btn>
-          </v-card-actions>
-     
+        <v-simple-table fixed-header light height="360" class="ma-5">
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-subtitle-1 text-left">ID Number</th>
+                <th class="text-subtitle-1 text-left">Name</th>
+                <th class="text-subtitle-1 text-left">Email Address</th>
+                <th class="text-subtitle-1 text-left">Contact No.</th>
+                <th class="text-subtitle-1 text-left">Guardian Contact No.</th>
+                <th class="text-subtitle-1 text-left">Balance</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(value, index) in students.data" :key="index">
+                <td>
+                  {{ value.id }}
+                </td>
+                <td>
+                  {{ value.lastname }}, {{ value.firstname }}
+                  {{ value.middlename }}
+                </td>
+                <td>
+                  {{ value.emailaddress }}
+                </td>
+                <td>
+                  {{ value.contactno }}
+                </td>
+                <td>
+                  {{ value.guardiancontactno }}
+                </td>
+                <td>₱ {{ value.balance }}</td>
+                <td>
+                  <v-dialog max-width="500" v-model="value.current">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn v-bind="attrs" v-on="on" color="#D50000" dark>
+                        Pay
+                      </v-btn>
+                    </template>
 
-            <v-simple-table fixed-header light height='360' class='ma-5 
-            ' >
-              <template v-slot:default >
-                <thead >
-                  <tr>
-                    <th class='text-subtitle-1 text-left'>
-                      ID Number
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Name
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Email Address
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Contact No.
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Guardian Contact No.
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      
-                    </th>
-                  </tr>
-                </thead>
-                <tbody >
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
-          <v-card-actions>
+                    <v-card>
+                      <v-card-title>
+                        {{ value.id }} - {{ value.lastname }},
+                        {{ value.firstname }} {{ value.middlename }}
+                      </v-card-title>
 
-          </v-card-actions>
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                            <v-col>
+                              <div>Balance: ₱ {{ value.balance }}</div>
+                            </v-col>
+                          </v-row>
 
-        </v-card>
+                          <v-row>
+                            <v-col>
+                              <v-text-field
+                                placeholder="Amount"
+                                prefix="₱"
+                                label="Amount"
+                                v-model="value.amount"
+                                outlined
+                              >
+                              </v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-card-text>
 
-      </v-row>
-    </v-container>
+                      <v-card-actions>
+                        <v-container fluid>
+                          <v-row>
+                            <v-col class="text-right">
+                              <v-btn
+                                @click="value.current = false"
+                                color="#D50000"
+                                dark
+                              >
+                                Cancel
+                              </v-btn>
+                            </v-col>
+                            <v-col>
+                              <v-btn @click="pay(value)" color="#D50000" dark>
+                                Confirm
+                              </v-btn>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+        <v-card-actions> </v-card-actions>
+      </v-card>
+    </v-row>
+  </v-container>
 </template>
 <script>
-  export default {
-    name: 'AdminStudentList',
-    method: {
+import axios from "axios";
 
+export default {
+  name: "AdminStudentList",
+  methods: {
+    async pay(value) {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      await axios.put(
+        "admin/studentPay",
+        {
+          amount: value.amount,
+          studentId: value.id,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      value.current = false;
+    },
+    async getAllStudents() {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      const students = await axios.get("admin/getAllStudents", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      return students;
+    },
+  },
+  data() {
+    return {
+      students: {},
+    };
+  },
+  async mounted() {
+    this.students = await this.getAllStudents();
+
+    let i = 0;
+    for (i = 0; i < this.students.data.length; i++) {
+      this.$set(this.students.data[i], "current", false);
+      this.$set(this.students.data[i], "amount", "");
     }
-  }
+
+    console.log(this.students);
+  },
+};
 </script>

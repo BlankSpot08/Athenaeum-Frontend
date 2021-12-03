@@ -1,212 +1,557 @@
 <template>
-    <v-container fluid>
-      <v-row align-content='start'>
-        <v-icon dark>
-          mdi-book-edit
-        </v-icon>
-        <div class='pa-5 font-weight-bold text-h6'>
-          Book Update  
-        </div>
-      </v-row>
-      <v-row class='mb-7'>
-        <v-card class='ma-0' color='#262626' id='cards' dark width='1500'>
-          <v-card-subtitle class='text-subtitle-1 font-weight-bold'>
-            Search ISBN or book title
+  <v-container fluid v-if="book.data">
+    <v-row align-content="start">
+      <v-icon dark> mdi-book-edit </v-icon>
+      <div class="pa-5 font-weight-bold text-h6">Book Update</div>
+    </v-row>
+
+    <v-form @submit.prevent="updateBook">
+      <v-row class="mb-7">
+        <v-card class="ma-0" color="#262626" id="cards" dark width="1500">
+          <v-card-actions>
+            <v-col class="pb-9 ma-n2">
+              <v-img
+                v-if="!bookCover.new_path"
+                :src="baseline + 'image/get/' + book.data.image_path"
+                height="395"
+                width="285"
+                max-height="550"
+                max-width="311"
+              >
+              </v-img>
+              <v-img
+                v-else
+                :src="bookCover.url"
+                height="395"
+                width="285"
+                max-height="550"
+                max-width="311"
+              >
+              </v-img>
+            </v-col>
+          </v-card-actions>
+
+          <v-card-actions class="my-n8">
+            <v-col class="ma-n3">
+              <v-file-input
+                name="image"
+                v-model="bookCover.new_path"
+                class="mx-1"
+                placeholder="Select your files"
+                :rules="rules"
+                accept="image/png, image/jpeg, image/bmp"
+                prepend-icon=""
+                prepend-inner-icon="mdi-image"
+                label="Upload Book Cover"
+                filled
+                background-color="white"
+                light
+                @change="addNewBookCover($event)"
+              >
+              </v-file-input>
+            </v-col>
+            <v-col class="ma-n3">
+              <v-combobox
+                class="mx-1"
+                v-model="book.data.category.name"
+                :items="categories"
+                name="category_name"
+                light
+                background-color="white"
+                label="Category"
+                filled
+              >
+              </v-combobox>
+            </v-col>
+          </v-card-actions>
+
+          <v-card-actions class="my-n8">
+            <v-col class="ma-n3">
+              <v-text-field
+                v-model="book.data.isbn"
+                name="new_isbn_number"
+                class="mx-1"
+                background-color="white"
+                light
+                label="ISBN"
+                placeholder="Type the ISBN"
+                filled
+              >
+              </v-text-field>
+            </v-col>
+            <v-col class="ma-n3">
+              <v-combobox
+                name="tags"
+                class="mx-1"
+                height="10"
+                background-color="white"
+                light
+                v-model="book.data.tags"
+                chips
+                clearable
+                label="Tags"
+                multiple
+                solo
+                filled
+              >
+                <template v-slot:selection="{ attrs, item, select, selected }">
+                  <v-chip
+                    v-bind="attrs"
+                    :input-value="selected"
+                    close
+                    @click="select"
+                    @click:close="remove(item)"
+                  >
+                    {{ item }}
+                  </v-chip>
+                </template>
+              </v-combobox>
+            </v-col>
+          </v-card-actions>
+
+          <v-card-actions class="my-n8">
+            <v-col class="ma-n3">
+              <v-text-field
+                name="edition"
+                v-model="book.data.edition"
+                class="mx-1"
+                background-color="white"
+                light
+                label="Edition"
+                placeholder="Type the book's edition"
+                filled
+              >
+              </v-text-field>
+            </v-col>
+            <v-col class="ma-n3">
+              <v-menu
+                :close-on-content-click="false"
+                :nudge-bottom="55"
+                min-width="auto"
+                transition="scale-transition"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    class="mx-1"
+                    :value="book.data.publication_year"
+                    name="publication_year"
+                    background-color="white"
+                    light
+                    v-bind="attrs"
+                    v-on="on"
+                    label="Publication Year"
+                    append-icon="mdi-calendar-range"
+                    filled
+                    readonly
+                  ></v-text-field>
+                </template>
+                <v-date-picker v-model="book.data.publication_year" />
+              </v-menu>
+            </v-col>
+          </v-card-actions>
+
+          <v-card-actions class="my-n8">
+            <v-col class="ma-n3">
+              <v-text-field
+                name="title"
+                v-model="book.data.title"
+                class="mx-1"
+                background-color="white"
+                light
+                label="Title"
+                placeholder="Type the book's title"
+                filled
+              ></v-text-field>
+            </v-col>
+
+            <v-col class="ma-n3">
+              <v-text-field
+                name="price"
+                v-model="book.data.price"
+                class="mx-1"
+                background-color="white"
+                light
+                label="Price"
+                placeholder="Type the book's price"
+                filled
+              ></v-text-field>
+            </v-col>
+          </v-card-actions>
+
+          <v-card-actions class="my-n8">
+            <v-textarea
+              name="synopsis"
+              v-model="book.data.synopsis"
+              class="mx-1"
+              background-color="white"
+              light
+              label="Synopsis"
+              placeholder="Type the synopsis"
+              filled
+            >
+            </v-textarea>
+          </v-card-actions>
+
+          <!-- Divider -->
+          <v-card-subtitle class="mb-5">
+            Publisher's Information
           </v-card-subtitle>
 
-          <v-card-actions>
-            <v-text-field class='mx-3 mt-n5 mb-n4' background-color='white' light filled ></v-text-field>
-            <v-btn class='mx-3 mt-n8' width='200' color='#D50000' x-large>Search</v-btn>
-          </v-card-actions>
-     
+          <v-card-actions class="my-n8">
+            <v-col class="ma-n3">
+              <v-text-field
+                name="new_publisher_name"
+                v-model="book.data.publisher.name"
+                class="mx-1"
+                background-color="white"
+                light
+                label="Publisher"
+                placeholder="Type the publisher's name"
+                filled
+              >
+              </v-text-field>
+            </v-col>
 
-            <v-simple-table fixed-header light height='360' class='ma-5 
-            ' >
-              <template v-slot:default >
-                <thead >
-                  <tr>
-                    <th class='text-subtitle-1 text-left'>
-                      ISBN
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Book Title
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Author
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Publisher
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Category
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      Price
-                    </th>
-                    <th class='text-subtitle-1 text-left'>
-                      
-                    </th>
-                  </tr>
-                </thead>
-                <tbody >
-                  <tr >
-                    <td>12345</td>
-                    <td>Harry Potter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Bloomsburry Publishing</td>
-                    <td>Fantasy</td>
-                    <td>Php 500.00</td>
-                    <td class='text-right'>
-                      <v-dialog v-model='dialog' width='1000' persistent>
-                        <template v-slot:activator='{on, attrs}'>
-                          <v-btn color='#D50000' dark v-bind='attrs' v-on='on'>
-                            Edit
+            <v-col class="ma-n3">
+              <v-text-field
+                name="publisher_email"
+                v-model="book.data.publisher.email"
+                class="mx-1"
+                background-color="white"
+                light
+                label="Email"
+                placeholder="Type the publisher's email"
+                filled
+              ></v-text-field>
+            </v-col>
+          </v-card-actions>
+
+          <v-card-actions class="my-n8">
+            <v-text-field
+              name="publisher_address"
+              v-model="book.data.publisher.address"
+              class="mx-1"
+              background-color="white"
+              light
+              label="Address"
+              placeholder="Type the publisher's address"
+              filled
+            />
+            <v-text-field
+              name="publisher_contactno"
+              v-model="book.data.publisher.contactno"
+              class="mx-1"
+              background-color="white"
+              light
+              label="Contact Number"
+              placeholder="Type the publisher's contact number"
+              filled
+            />
+          </v-card-actions>
+
+          <!-- divider -->
+          <v-card-subtitle class="mb-n3">
+            Author's Information
+          </v-card-subtitle>
+
+          <v-simple-table fixed-header light height="200" class="ma-3">
+            <v-text-field name="yamete"> asdas </v-text-field>
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-subtitle-1 text-left">Name</th>
+                  <th class="text-subtitle-1 text-left">Email</th>
+                  <th class="text-subtitle-1 text-left">Address</th>
+                  <th class="text-subtitle-1 text-left">Contact Number</th>
+                  <th />
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr v-for="(value, index) in book.data.authors" :key="index">
+                  <td>
+                    <v-text-field
+                      :name="`authors[${index}][name]`"
+                      v-model="value.name"
+                    />
+                  </td>
+                  <td>
+                    <v-text-field
+                      :name="`authors[${index}][email]`"
+                      v-model="value.email"
+                    />
+                  </td>
+                  <td>
+                    <v-text-field
+                      :name="`authors[${index}][address]`"
+                      v-model="value.address"
+                    />
+                  </td>
+                  <td>
+                    <v-text-field
+                      :name="`authors[${index}][contactno]`"
+                      v-model="value.contactno"
+                    />
+                  </td>
+
+                  <td class="text-right">
+                    <v-btn class="mx-1" @click="deleteAuthor(index)">
+                      Remove
+                    </v-btn>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+
+          <v-card-actions>
+            <v-row justify="end" class="mt-n1 mr-1">
+              <v-dialog max-width="500" v-model="newAuthor.dialog">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    dark
+                    width="110"
+                    color="#D50000"
+                    class="mx-1"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    + Author
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <div>New Author</div>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col>
+                          <v-text-field
+                            placeholder="Name"
+                            v-model="newAuthor.name"
+                          >
+                          </v-text-field>
+                          <v-text-field
+                            placeholder="Email"
+                            v-model="newAuthor.email"
+                          >
+                          </v-text-field>
+                          <v-text-field
+                            placeholder="Address"
+                            v-model="newAuthor.address"
+                          >
+                          </v-text-field>
+                          <v-text-field
+                            placeholder="Contact Number"
+                            v-model="newAuthor.contactno"
+                          >
+                          </v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col>
+                          <v-btn class="mr-5" @click="clearNewAuthor()">
+                            Close
                           </v-btn>
-                        </template>
-                        <v-card class='ma-0' color='#262626' id='cards' dark width='1500'>
-                          <v-card-title>
-                            Add Books
-                          </v-card-title>
-                          <v-card-subtitle>
-                            Fill up the information needed below to add book(s).
-                          </v-card-subtitle>
-                          <v-card-actions>
-                            <v-file-input class='mx-1' placeholder="Select your files" :rules="rules" accept="image/png, image/jpeg, image/bmp" prepend-icon="mdi-image" label="Upload Book Cover"></v-file-input>
-                          </v-card-actions>
-                          <v-card-actions class='my-n5'>
-                            <v-textarea class='mx-1' background-color='white' light label='Synopsis' placeholder="Type the synopsis" filled></v-textarea>
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-text-field class='mx-1' background-color='white' light label='ISBN' placeholder='Type the ISBN' filled></v-text-field>
-                            <v-text-field class='mx-1' background-color='white' light label='Publisher' placeholder="Type the publisher's name" filled></v-text-field>
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-text-field class='mx-1' background-color='white' light label='Edition' placeholder="Type the book's edition" filled></v-text-field>
-                            <v-text-field class='mx-1' background-color='white' light label='Publisher - Email' placeholder="Type the publisher's email" filled></v-text-field>
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-text-field class='mx-1' background-color='white' light label='Title' placeholder="Type the book's title" filled></v-text-field>
-                            <v-text-field class='mx-1' background-color='white' light label='Publisher - Address' placeholder="Type the publisher's address" filled></v-text-field>
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-col class='ma-n3'>
-                              <v-combobox class='mx-1'  v-model='start' :items="items" light background-color='white' label='Category'  filled> 
-                              </v-combobox>
-                            </v-col>
-                            <v-col class='ma-n3'>
-                              <v-text-field  class='mx-1' background-color='white' light label='Publisher - Contact Number' placeholder="Type the publisher's contact number" filled></v-text-field>
-                            </v-col> 
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-col class='ma-n3'>
-                              <v-combobox class='mx-1' height='10' background-color='white' light v-model="chips" chips clearable label="Tags" multiple filled>
-                                <template v-slot:selection="{ attrs, item, select, selected }">
-                                  <v-chip v-bind="attrs" :input-value="selected" close @click="select" @click:close="remove(item)">
-                                    <strong>{{ item }}</strong>&nbsp;
-                                  </v-chip>
-                                </template>
-                              </v-combobox>
-                            </v-col>
-                            <v-col class='ma-n3'>
-                              <v-menu >
-                                <template v-slot:activator="{on}">
-                                  <v-text-field class='mx-1' :value='publicationYear' background-color='white' light v-on='on' label='Publication Year' append-icon='mdi-calendar-range' filled></v-text-field>
-                                </template>
-                                <v-date-picker v-model='publicationYear'></v-date-picker>
-                              </v-menu>
-                            </v-col>
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-text-field class='mx-1' background-color='white' light label='Call Number' placeholder="Type the book's call number" filled></v-text-field>
-                            <!-- temporary(Author) -->
-                            <v-text-field class='mx-1' background-color='white' light label='Author' placeholder="Type the author's name" filled></v-text-field>   
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-col class='ma-n3'>
-                              <v-menu >
-                                <template v-slot:activator="{on}">
-                                  <v-text-field class='mx-1' :value='dateOfRegister' background-color='white' light v-on='on' label='Date of Register' append-icon='mdi-calendar-range' filled></v-text-field>
-                                </template>
-                                <v-date-picker v-model='dateOfRegister'></v-date-picker>
-                              </v-menu>
-                            </v-col>
-                            <v-col class='ma-n3'>
-                              <v-text-field class='mx-1' background-color='white' light label='Author - Email' placeholder="Type the author's email" filled></v-text-field> 
-                            </v-col>
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-text-field class='mx-1' background-color='white' light label='Registered By' placeholder="Type your name" filled></v-text-field> 
-                            <v-text-field class='mx-1' background-color='white' light label='Author - Address' placeholder="Type the author's address" filled></v-text-field>
-                          </v-card-actions>
-                          <v-card-actions class='my-n8'>
-                            <v-text-field class='mx-1 mb-4' background-color='white' light label='Price' placeholder="Type the book's price" filled></v-text-field> 
-                            <v-text-field class='mx-1 mb-4' background-color='white' light label='Author - Contact Number' placeholder="Type the author's contact number" filled></v-text-field>
-                          </v-card-actions>
-                          <v-card-actions class='ma-2'>
-                            <v-col class='ma-n2'>
-                              <v-row>
-                                <v-col class='my-n5'>
-                                  <v-btn block color='#D50000' >
-                                    Clear
-                                  </v-btn>  
-                                </v-col>
-                              </v-row>
-                              <v-row>
-                                <v-col >
-                                  <v-btn block color='#D50000' @click='dialog=false'>
-                                    Cancel
-                                  </v-btn>
-                                </v-col>      
-                              </v-row>
-                            </v-col>
-                            <v-col class='mx-n2 mt-5'> 
-                              <v-btn block color='#D50000' >
-                                Confirm
-                              </v-btn>
-                            </v-col>
-                            
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
-          <v-card-actions>
+                          <v-btn @click="addNewAuthor()"> Confirm </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
 
+                  <v-card-actions>
+                    <v-spacer />
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
           </v-card-actions>
 
+          <v-card-actions class="mt-8 ma-1">
+            <v-btn
+              width="285"
+              color="#D50000"
+              @click="goToRouterLink('adminBookList')"
+            >
+              Cancel
+            </v-btn>
+            <v-btn width="285" color="#D50000" type="submit"> Confirm </v-btn>
+          </v-card-actions>
         </v-card>
-
       </v-row>
-    </v-container>
+    </v-form>
+  </v-container>
 </template>
+
 <script>
-  export default {
-    name: 'AdminBookUpdate',
-    data() {
-      return {
-        start: '',
-        dateOfRegister: null,
-        publicationYear: null,
-        dialog: false,
-        items: [
-          'Programming',
-          'Design',
-          'Vue',
-          'Vuetify',
-        ],
-        rules: [
-          value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!'
-        ],
-      }  
+import axios from "axios";
+import FormData from "form-data";
+
+export default {
+  name: "AdminBookUpdate",
+  methods: {
+    async updateBook(event) {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      const formData = new FormData(event.target);
+
+      formData.append("old_isbn_number", this.ref_book.data.isbn);
+      formData.append("old_publisher_name", this.ref_book.data.publisher.name);
+
+      let i = 0;
+      for (i = 0; i < this.ref_book.data.authors.length; i++) {
+        formData.append(
+          `old_authors[${i}][name]`,
+          this.ref_book.data.authors[i].name
+        );
+
+        formData.append(
+          `old_authors[${i}][address]`,
+          this.ref_book.data.authors[i].address
+        );
+
+        formData.append(
+          `old_authors[${i}][email]`,
+          this.ref_book.data.authors[i].email
+        );
+
+        formData.append(
+          `old_authors[${i}][contactno]`,
+          this.ref_book.data.authors[i].contactno
+        );
+      }
+
+      await axios.put("admin/bookUpdate", formData, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      this.goToRouterLink("adminBookList");
     },
-    methods: {
-      remove (item) {
-        this.chips.splice(this.chips.indexOf(item), 1)
-        this.chips = [...this.chips]
-      },
+    async getBook() {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      const book = await axios.post(
+        "admin/getBook",
+        {
+          isbn_number: this.$route.params.isbn,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return book;
+    },
+    remove(item) {
+      this.book.data.tags.splice(this.book.data.tags.indexOf(item), 1);
+      this.book.data.tags = [...this.book.data.tags];
+    },
+    addNewBookCover(event) {
+      this.bookCover.url = URL.createObjectURL(this.bookCover.new_path);
+
+      this.bookCover.image = event;
+
+      console.log(this.bookCover.url);
+      console.log(this.bookCover.new_path);
+    },
+    addNewAuthor() {
+      this.$set(this.book.data.authors, this.book.data.authors.length, {
+        name: this.newAuthor.name,
+        address: this.newAuthor.address,
+        email: this.newAuthor.email,
+        contactno: this.newAuthor.contactno,
+        dialog: false,
+      });
+
+      this.clearNewAuthor();
+    },
+    closeNewAuthor() {
+      this.clearNewAuthor();
+    },
+    clearNewAuthor() {
+      this.newAuthor.dialog = false;
+
+      this.newAuthor.name = "";
+      this.newAuthor.email = "";
+      this.newAuthor.address = "";
+      this.newAuthor.contactno = "";
+    },
+    deleteAuthor(index) {
+      this.book.data.authors.splice(index, 1);
+    },
+    editAuthor(author) {
+      this.closeAuthor(author);
+    },
+    closeAuthor(author) {
+      author.dialog = false;
+    },
+    goToRouterLink(name) {
+      this.$router.push({ name: name });
+    },
+  },
+  async mounted() {
+    this.book = await this.getBook();
+    this.ref_book = JSON.parse(JSON.stringify(this.book));
+
+    const tags = [];
+
+    let i = 0;
+    for (i = 0; i < this.book.data.tags.length; i++) {
+      this.$set(tags, tags.length, this.book.data.tags[i].name);
     }
-  }
+
+    this.$set(this.book.data, "tags", tags);
+
+    console.log(this.book);
+    console.log("this is the book ref");
+    console.log(this.ref_book);
+  },
+  data() {
+    return {
+      categories: [
+        "Adventure/Action",
+        "Fantasy",
+        "Fiction",
+        "History",
+        "Horror",
+        "Language",
+        "Literature",
+        "Mystery",
+        "Natural Science",
+        "Psychology",
+        "Religion",
+        "Romance",
+        "Social Science",
+        "Technology",
+        "The Arts",
+      ],
+      book: {},
+      ref_book: {},
+      rules: [
+        (value) =>
+          !value ||
+          value.size < 2000000 ||
+          "Avatar size should be less than 2 MB!",
+      ],
+      baseline: axios.defaults.baseURL,
+      bookCover: {
+        url: null,
+        image: null,
+        new_path: null,
+      },
+      newAuthor: {
+        name: "",
+        address: "",
+        email: "",
+        contactno: "",
+        dialog: false,
+      },
+    };
+  },
+};
 </script>

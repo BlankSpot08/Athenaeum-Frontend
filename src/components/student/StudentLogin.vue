@@ -41,7 +41,7 @@
                   v-bind:value="password"
                   type="password"
                 ></v-text-field>
-                <!-- <v-btn dark color='#D50000' @click="goToRouterLink('studentHome')" block>Login</v-btn> -->
+                
                 <v-btn dark color="#D50000" @click="login()" block>Login</v-btn>
               </div>
 
@@ -71,14 +71,21 @@
         </v-row>
       </v-container>
     </v-main>
+    <v-footer color='black' dark>
+      <Footer/>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
+import Footer from '../Footer.vue';
 
 export default {
   name: "StudentLogin",
+  components: {
+      Footer
+  },
   data() {
     return {
       idNumber: "19-14770-807",

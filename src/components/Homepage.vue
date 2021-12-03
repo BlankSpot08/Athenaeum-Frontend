@@ -141,13 +141,22 @@
         </v-row>
         
       </v-container>
+      
     </v-main>
+    <v-footer color='black' dark>
+        <Footer/>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
+import Footer from './Footer.vue';
+
   export default {
     name: 'Homepage',
+    components: {
+      Footer
+    },
     data() {
       return {
         faqs: [

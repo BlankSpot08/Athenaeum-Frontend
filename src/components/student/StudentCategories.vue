@@ -32,7 +32,7 @@
     name: 'StudentCategories',
     methods: {
       goToCategoryLink(name, title) {
-        this.$router.push({ name: name, query: { name: title } })
+        this.$router.push({ name: name, params: { name: title } })
       }
     },
     data() {

@@ -6,7 +6,7 @@
           <v-row>
             <v-col class="" lg="3">
               <v-img 
-                :src="require(`@/assets/${categorySources[this.$route.query.name]}`)"
+                :src="require(`@/assets/${categorySources[this.$route.params.name]}`)"
                 height="250" width="330" max-height="400" max-width="400">
               </v-img>   
             </v-col>
@@ -31,7 +31,7 @@
       <v-col v-for="j in maxCount" :key="j">
         <a 
           v-if="((j + (maxCount * (i - 1))) - 1) < books.data.length" 
-          @click="goToBookLink('studentBook', books.data[(j + (maxCount * (i - 1))) - 1].isbn_number)">
+          @click="goToBookLink('studentBook', books.data[(j + (maxCount * (i - 1))) - 1].isbn)">
           <v-img
             :src="baseline + 'image/get/' + books.data[(j + (maxCount * (i - 1))) - 1].image_path"
             height="225" 
@@ -61,8 +61,8 @@
 
         return category
       },
-      goToBookLink(name, id) {
-        this.$router.push({name: name, query: { id: id }})
+      goToBookLink(name, isbn) {
+        this.$router.push({name: name, params: { isbn: isbn }})
       },
     },
     data() {
@@ -92,8 +92,8 @@
       }
     },
     async mounted() {
-      this.category = await this.getCategory(this.$route.query.name)
-      this.books = await this.getBooks(this.$route.query.name)
+      this.category = await this.getCategory(this.$route.params.name)
+      this.books = await this.getBooks(this.$route.params.name)
       
       this.rows = Math.ceil(this.books.data.length / this.maxCount)
 

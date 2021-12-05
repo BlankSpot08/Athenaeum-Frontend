@@ -84,7 +84,7 @@
 
           <v-row>
             <v-col class="text-body-1">
-              <div>ISBN Number: {{ book.data.isbn_number }}</div>
+              <div>ISBN Number: {{ book.data.isbn }}</div>
 
               <div>Title: {{ book.data.title }}</div>
 

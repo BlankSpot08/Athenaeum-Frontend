@@ -13,6 +13,7 @@
             background-color="white"
             light
             filled
+            v-model="search_data.id"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -20,6 +21,7 @@
             background-color="white"
             light
             filled
+            v-model="search_data.name"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -27,6 +29,7 @@
             background-color="white"
             light
             filled
+            v-model="search_data.address"
           ></v-text-field>
         </v-card-actions>
         <v-card-actions class="mt-0">
@@ -37,6 +40,7 @@
               background-color="white"
               light
               filled
+              v-model="search_data.contactno"
             ></v-text-field>
           </v-col>
           <v-col>
@@ -46,10 +50,16 @@
               background-color="white"
               light
               filled
+              v-model="search_data.guardiancontactno"
             ></v-text-field>
           </v-col>
           <v-col class="text-right">
-            <v-btn class="mt-n15" width="200" color="#D50000" x-large
+            <v-btn
+              class="mt-n15"
+              width="200"
+              color="#D50000"
+              x-large
+              @click="search()"
               >Search</v-btn
             >
           </v-col>
@@ -91,7 +101,10 @@
                 </td>
                 <td>₱ {{ value.balance }}</td>
                 <td>
-                  <v-dialog max-width="500" v-model="value.current">
+                  <v-dialog
+                    max-width="500"
+                    v-model="value[`current[${index}]`]"
+                  >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn v-bind="attrs" v-on="on" color="#D50000" dark>
                         Pay
@@ -132,7 +145,7 @@
                           <v-row>
                             <v-col class="text-right">
                               <v-btn
-                                @click="value.current = false"
+                                @click="value[`current[${index}]`] = false"
                                 color="#D50000"
                                 dark
                               >
@@ -140,7 +153,11 @@
                               </v-btn>
                             </v-col>
                             <v-col>
-                              <v-btn @click="pay(value)" color="#D50000" dark>
+                              <v-btn
+                                @click="pay(value, index)"
+                                color="#D50000"
+                                dark
+                              >
                                 Confirm
                               </v-btn>
                             </v-col>
@@ -165,7 +182,18 @@ import axios from "axios";
 export default {
   name: "AdminStudentList",
   methods: {
-    async pay(value) {
+    async search() {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      const search = await axios.post("admin/studentSearch", this.search_data, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      this.students = search;
+    },
+    async pay(value, index) {
       const token = JSON.parse(localStorage.getItem("token"));
 
       await axios.put(
@@ -181,7 +209,7 @@ export default {
         }
       );
 
-      value.current = false;
+      value[`current[${index}]`] = false;
     },
     async getAllStudents() {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -198,6 +226,13 @@ export default {
   data() {
     return {
       students: {},
+      search_data: {
+        id: "",
+        name: "",
+        email: "",
+        contactno: "",
+        guardiancontactno: "",
+      },
     };
   },
   async mounted() {
@@ -205,7 +240,7 @@ export default {
 
     let i = 0;
     for (i = 0; i < this.students.data.length; i++) {
-      this.$set(this.students.data[i], "current", false);
+      this.$set(this.students.data[i], `current[${i}]`, false);
       this.$set(this.students.data[i], "amount", "");
     }
 

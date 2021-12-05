@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Homepage from '../components/Homepage.vue'
+import ContactUs from '../components/ContactUs.vue'
+import DeveloperCenter from '../components/DeveloperCenter.vue'
+import FAQs from '../components/FAQs.vue'
 
 import AdminLogin from '../components/admin/AdminLogin'
 import AdminRegister from '../components/admin/AdminRegister'
@@ -29,14 +32,36 @@ import StudentPenalty from '../components/student/StudentPenalty'
 import StudentBook from '../components/student/StudentBook'
 import StudentSearch from '../components/student/StudentSearch'
 
+import LegalNotices from '../components/legal/LegalNotices'
+import Privacy from '../components/legal/Privacy'
+import TermsOfService from '../components/legal/TermsOfService'
+import Legal from '../components/legal/Legal'
+
+import axios from 'axios'
+
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     routes: [
         {
             path: '',
             name: 'homepage',
             component: Homepage
+        },
+        {
+            path: 'ContactUs',
+            name: 'contactUs',
+            component: ContactUs
+        },
+        {
+            path: 'DeveloperCenter',
+            name: 'developerCenter',
+            component: DeveloperCenter
+        },
+        {
+            path: 'FAQs',
+            name: 'fAQs',
+            component: FAQs
         },
         {
             path: '/admin/login',
@@ -52,6 +77,9 @@ export default new Router({
             path: '/admin/',
             name: 'admin',
             component: Admin,
+            meta: {
+                adminAuth: true
+            },
             children: [
                 {
                     path: 'overview',
@@ -98,7 +126,7 @@ export default new Router({
                     name: 'adminProfile',
                     component: AdminProfile,
                 },
-            ]
+            ],
         },
         {
             path: '/student/login',
@@ -114,6 +142,9 @@ export default new Router({
             path: '/student',
             name: 'student',
             component: Student,
+            meta: {
+                studentAuth: true
+            },
             children: [
                 {
                     path: 'home',
@@ -161,6 +192,100 @@ export default new Router({
                     component: StudentSearch
                 }
             ]
+        },
+        {
+            path: '/legal',
+            name: 'legal',
+            component: Legal,
+            children: [
+                {
+                    path: 'legal-notices',
+                    name: 'legalNotices',
+                    component: LegalNotices
+                },
+                {
+                    path: 'privacy',
+                    name: 'privacy',
+                    component: Privacy
+                },
+                {
+                    path: 'TermsOfService',
+                    name: 'TermsOfService',
+                    component: TermsOfService
+                },
+            ]
         }
     ]
 })
+
+router.beforeEach(async (to, from, next) => {
+    const token = JSON.parse(localStorage.getItem("token"))
+
+    if (to.matched.some(record => record.meta.studentAuth)) {
+        if (token) {
+            console.log('test')
+            try {
+                const authorized = await axios.post(
+                    'student/authorize',
+                    {
+                        token: token
+                    },
+                    {
+                        headers: {
+                            authorization: `Bearer ${token}`,
+                        }
+                    }
+                )
+
+                if (authorized.data) {
+                    next()
+                }
+            } catch (err) {
+                console.log(err)
+                next({ name: 'adminOverview' })
+            }
+        } else {
+            next({ name: 'studentLogin' })
+        }
+    } else if (to.matched.some(record => record.meta.adminAuth)) {
+        if (token) {
+            try {
+                const authorized = await axios.post('admin/authorize', { token: token }, {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    }
+                })
+
+                if (authorized.data) {
+                    next()
+                }
+            } catch (err) {
+                console.log(err)
+                next({ name: 'studentHome' })
+            }
+        } else {
+            next({ name: 'adminLogin' })
+        }
+    } else {
+        if (token) {
+            try {
+                const isAdmin = await axios.post('admin/authorize', { token: token }, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                })
+
+                if (isAdmin.data) {
+                    next({ name: 'adminOverview' })
+                }
+            } catch (err) {
+                console.log(err)
+                next({ name: 'studentHome' })
+            }
+        }
+
+        next()
+    }
+})
+
+export default router;

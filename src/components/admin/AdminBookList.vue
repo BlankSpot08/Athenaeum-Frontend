@@ -13,52 +13,61 @@
             background-color="white"
             light
             filled
+            v-model="search_data.isbn"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
-            label="Search Book Title"
+            label="Search title"
             background-color="white"
             light
             filled
+            v-model="search_data.title"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
-            label="Search Author"
+            label="Search category"
             background-color="white"
             light
             filled
+            v-model="search_data.category"
           ></v-text-field>
         </v-card-actions>
-        <v-card-actions class="mt-n2">
-          <v-text-field
-            class="mx-3 mt-n5"
-            label="Search Publisher"
-            background-color="white"
-            light
-            filled
-          ></v-text-field>
-          <v-text-field
-            class="mx-3 mt-n5"
-            label="Search Category"
-            background-color="white"
-            light
-            filled
-          ></v-text-field>
-          <v-text-field
-            class="mx-3 mt-n5"
-            label="Search Price"
-            background-color="white"
-            light
-            filled
-          ></v-text-field>
-        </v-card-actions>
-        <v-card-actions>
+        <v-card-actions class="mt-0">
+          <v-col>
+            <v-text-field
+              class="mt-n10"
+              label="Search author"
+              background-color="white"
+              light
+              filled
+              v-model="search_data.author_name"
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              class="mt-n10"
+              label=" Publisher"
+              background-color="white"
+              light
+              filled
+              v-model="search_data.publisher_name"
+            ></v-text-field>
+          </v-col>
           <v-col class="text-right">
-            <v-btn class="mt-n10" width="200" color="#D50000" x-large
+            <v-btn
+              class="mt-n15"
+              width="200"
+              color="#D50000"
+              x-large
+              @click="search()"
               >Search</v-btn
             >
           </v-col>
         </v-card-actions>
+
+        <v-card-subtitle class="ml-1 mt-n10 mb-n8 text-subtitle-1">
+          Book List
+        </v-card-subtitle>
         <v-simple-table fixed-header light height="360" class="ma-5">
           <template v-slot:default>
             <thead>
@@ -122,9 +131,27 @@ export default {
           "Avatar size should be less than 2 MB!",
       ],
       books: {},
+      search_data: {
+        isbn: "",
+        title: "",
+        author_name: "",
+        publisher_name: "",
+        category: "",
+      },
     };
   },
   methods: {
+    async search() {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      const search = await axios.post("admin/bookSearch", this.search_data, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      this.books = search;
+    },
     async getAllBooks() {
       const token = JSON.parse(localStorage.getItem("token"));
 

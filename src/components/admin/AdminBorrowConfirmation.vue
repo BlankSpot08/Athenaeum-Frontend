@@ -13,6 +13,7 @@
             background-color="white"
             light
             filled
+            v-model="search_data.id"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -20,6 +21,7 @@
             background-color="white"
             light
             filled
+            v-model="search_data.name"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -27,6 +29,7 @@
             background-color="white"
             light
             filled
+            v-model="search_data.isbn"
           ></v-text-field>
         </v-card-actions>
         <v-card-actions class="mt-0">
@@ -37,11 +40,17 @@
               background-color="white"
               light
               filled
+              v-model="search_data.title"
             ></v-text-field>
           </v-col>
           <v-col></v-col>
           <v-col class="text-right">
-            <v-btn class="mt-n15" width="200" color="#D50000" x-large
+            <v-btn
+              class="mt-n15"
+              width="200"
+              color="#D50000"
+              x-large
+              @click="search()"
               >Search</v-btn
             >
           </v-col>
@@ -92,7 +101,10 @@
                 </td>
 
                 <td class="text-right">
-                  <v-dialog max-width="500" v-model="value.reject_current">
+                  <v-dialog
+                    max-width="500"
+                    v-model="value[`reject_current[${index}]`]"
+                  >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn v-bind="attrs" v-on="on" color="#D50000" dark>
                         Reject
@@ -120,7 +132,9 @@
                           <v-row>
                             <v-col class="text-right">
                               <v-btn
-                                @click="value.reject_current = false"
+                                @click="
+                                  value[`reject_current[${index}]`] = false
+                                "
                                 color="#D50000"
                                 dark
                               >
@@ -129,7 +143,7 @@
                             </v-col>
                             <v-col>
                               <v-btn
-                                @click="rejectBookRequest(value)"
+                                @click="rejectBookRequest(value, index)"
                                 color="#D50000"
                                 dark
                               >
@@ -144,7 +158,10 @@
                 </td>
 
                 <td class="text-right">
-                  <v-dialog max-width="500" v-model="value.accept_current">
+                  <v-dialog
+                    max-width="500"
+                    v-model="value[`accept_current[${index}]`]"
+                  >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn v-bind="attrs" v-on="on" color="#D50000" dark>
                         Accept
@@ -172,7 +189,9 @@
                           <v-row>
                             <v-col class="text-right">
                               <v-btn
-                                @click="value.accept_current = false"
+                                @click="
+                                  value[`accept_current[${index}`] = false
+                                "
                                 color="#D50000"
                                 dark
                               >
@@ -181,7 +200,7 @@
                             </v-col>
                             <v-col>
                               <v-btn
-                                @click="acceptBookRequest(value)"
+                                @click="acceptBookRequest(value, index)"
                                 color="#D50000"
                                 dark
                               >
@@ -198,7 +217,6 @@
             </tbody>
           </template>
         </v-simple-table>
-        <v-card-actions> </v-card-actions>
       </v-card>
     </v-row>
   </v-container>
@@ -210,7 +228,22 @@ import axios from "axios";
 export default {
   name: "AdminBorrowConfirmation",
   methods: {
-    async acceptBookRequest(book_request) {
+    async search() {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      const search = await axios.post(
+        "admin/borrowRequestSearch",
+        this.search_data,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      this.borrow_requests = search;
+    },
+    async acceptBookRequest(book_request, index) {
       const token = JSON.parse(localStorage.getItem("token"));
 
       await axios.post(
@@ -226,9 +259,9 @@ export default {
         }
       );
 
-      book_request.current = false;
+      book_request[`accept_current[${index}]`] = false;
     },
-    async rejectBookRequest(book_request) {
+    async rejectBookRequest(book_request, index) {
       const token = JSON.parse(localStorage.getItem("token"));
 
       await axios.delete("admin/rejectBorrowRequest", {
@@ -241,7 +274,7 @@ export default {
         },
       });
 
-      book_request.reject_current = false;
+      book_request[`reject_current[${index}]`] = false;
     },
     async getAllBorrowRequests() {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -258,6 +291,12 @@ export default {
   data() {
     return {
       borrow_requests: {},
+      search_data: {
+        id: "",
+        name: "",
+        isbn: "",
+        title: "",
+      },
     };
   },
   async mounted() {
@@ -265,8 +304,8 @@ export default {
 
     let i = 0;
     for (i = 0; i < this.borrow_requests.data.length; i++) {
-      this.$set(this.borrow_requests.data[i], "reject_current", false);
-      this.$set(this.borrow_requests.data[i], "accept_current", false);
+      this.$set(this.borrow_requests.data[i], `reject_current[${i}]`, false);
+      this.$set(this.borrow_requests.data[i], `accept_current[${i}]`, false);
     }
 
     console.log(this.borrow_requests);

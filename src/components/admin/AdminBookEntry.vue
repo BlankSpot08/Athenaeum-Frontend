@@ -403,7 +403,6 @@ export default {
       });
       console.log("here");
 
-      // this.clear()
       console.log("book registartion was successful");
     },
     getCurrentDate() {

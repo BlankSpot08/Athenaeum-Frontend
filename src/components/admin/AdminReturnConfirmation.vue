@@ -13,6 +13,7 @@
             background-color="white"
             light
             filled
+            v-model="search_data.id"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -20,6 +21,7 @@
             background-color="white"
             light
             filled
+            v-model="search_data.name"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -27,8 +29,10 @@
             background-color="white"
             light
             filled
+            v-model="search_data.isbn"
           ></v-text-field>
         </v-card-actions>
+
         <v-card-actions class="mt-0">
           <v-col>
             <v-text-field
@@ -37,11 +41,17 @@
               background-color="white"
               light
               filled
+              v-model="search_data.title"
             ></v-text-field>
           </v-col>
           <v-col></v-col>
           <v-col class="text-right">
-            <v-btn class="mt-n15" width="200" color="#D50000" x-large
+            <v-btn
+              class="mt-n15"
+              width="200"
+              color="#D50000"
+              x-large
+              @click="search()"
               >Search</v-btn
             >
           </v-col>
@@ -81,7 +91,10 @@
                   {{ value.student.balance }}
                 </td>
                 <td class="text-right">
-                  <v-dialog max-width="500" v-model="value.current">
+                  <v-dialog
+                    max-width="500"
+                    v-model="value[`current[${index}]`]"
+                  >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         v-bind="attrs"
@@ -115,7 +128,7 @@
                           <v-row>
                             <v-col class="text-right">
                               <v-btn
-                                @click="value.current = false"
+                                @click="value[`current[${index}]`] = false"
                                 color="#D50000"
                                 dark
                               >
@@ -153,7 +166,22 @@ export default {
   name: "AdminReturnConfirmation",
 
   methods: {
-    async acceptBookRequest(book_request) {
+    async search() {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      const search = await axios.post(
+        "admin/returnRequestSearch",
+        this.search_data,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      this.return_requests = search;
+    },
+    async acceptBookRequest(book_request, index) {
       const token = JSON.parse(localStorage.getItem("token"));
 
       await axios.post(
@@ -169,7 +197,7 @@ export default {
         }
       );
 
-      book_request.current = false;
+      book_request[`current[${index}]`] = false;
     },
     async getAllReturnRequests() {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -186,6 +214,12 @@ export default {
   data() {
     return {
       return_requests: {},
+      search_data: {
+        id: "",
+        name: "",
+        isbn: "",
+        title: "",
+      },
     };
   },
   async mounted() {
@@ -193,7 +227,7 @@ export default {
 
     let i = 0;
     for (i = 0; i < this.return_requests.data.length; i++) {
-      this.$set(this.return_requests.data[i], "current", false);
+      this.$set(this.return_requests.data[i], `current[${i}]`, false);
     }
 
     console.log(this.return_requests);

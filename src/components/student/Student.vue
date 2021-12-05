@@ -101,6 +101,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   name: "StudentRegister",
   methods: {
@@ -109,7 +110,7 @@ export default {
         const routerName = this.$route.name;
 
         if (routerName.localeCompare("studentSearch") !== 0) {
-          this.$set(this.originalRoute, "name", routerName);
+          this.$set(this.originalRoute, "track", this.$route.name);
 
           if (Object.keys(this.$route.params).length > 0) {
             this.$set(this.originalRoute, "params", this.$route.params);
@@ -121,14 +122,14 @@ export default {
         }
       }
 
-      console.log("yes");
-      console.log(this.originalRoute);
-
       if (this.searchValue.length != 0) {
-        this.goToSearchLink("studentSearch", this.searchValue);
+        this.goToSearchLink("studentSearch", {
+          track: this.originalRoute.track || this.$route.query.track,
+          query: this.searchValue,
+        });
       } else {
         this.$router.push({
-          name: this.originalRoute.name,
+          name: this.$route.query.track,
           params: this.originalRoute.params,
           query: this.originalRoute.query,
         });
@@ -145,7 +146,7 @@ export default {
       }
     },
     goToSearchLink(name, query) {
-      this.$router.push({ name: name, query: { query } });
+      this.$router.push({ name: name, query: query });
     },
     logout() {
       localStorage.removeItem("token");

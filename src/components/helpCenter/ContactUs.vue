@@ -1,20 +1,5 @@
 <template>
   <v-app>
-    <v-app-bar app dark color="black" height="58">
-      <div class="red--text text--accent-4 ml-16 text-h4 font-weight-bold">
-        ATHENAEUM
-      </div>
-      <v-spacer></v-spacer>
-      <v-btn outlined @click="goToRouterLink('studentRegister')"
-        >Join Athenaeum</v-btn
-      >
-      <v-btn
-        color="#D50000"
-        class="ml-5"
-        @click="goToRouterLink('studentLogin')"
-        >Sign In</v-btn
-      >
-    </v-app-bar>
     <v-main>
       <v-container class="mt-8">
         <a class="black--text" @click="$router.go(-1)">
@@ -34,21 +19,6 @@
 
         <v-divider></v-divider>
       </v-container>
-      <v-footer bottom padless absolute class="grey darken-4">
-        <v-container class="my-8">
-          <v-row>
-            <v-col class="text-center">
-              <a class="grey--text">Privacy</a>
-            </v-col>
-            <v-col class="text-center">
-              <a class="grey--text">Terms of Service</a>
-            </v-col>
-            <v-col class="text-center">
-              <a class="grey--text">Legal Notices</a>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-footer>
     </v-main>
   </v-app>
 </template>

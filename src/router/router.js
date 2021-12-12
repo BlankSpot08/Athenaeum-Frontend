@@ -2,9 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Homepage from '../components/Homepage.vue'
-import ContactUs from '../components/ContactUs.vue'
 import DeveloperCenter from '../components/DeveloperCenter.vue'
-import FAQs from '../components/FAQs.vue'
 
 import AdminLogin from '../components/admin/AdminLogin'
 import AdminRegister from '../components/admin/AdminRegister'
@@ -35,10 +33,12 @@ import StudentSearch from '../components/student/StudentSearch'
 import StudentForgotPassword from '../components/student/StudentForgotPassword'
 import StudentResetPassword from '../components/student/StudentResetPassword'
 
-import LegalNotices from '../components/legal/LegalNotices'
-import Privacy from '../components/legal/Privacy'
-import TermsOfService from '../components/legal/TermsOfService'
-import Legal from '../components/legal/Legal'
+import LegalNotices from '../components/helpCenter/LegalNotices'
+import Privacy from '../components/helpCenter/Privacy'
+import TermsOfService from '../components/helpCenter/TermsOfService'
+import HelpCenter from '../components/helpCenter/HelpCenter'
+import ContactUs from '../components/helpCenter/ContactUs.vue'
+import FAQs from '../components/helpCenter/FAQs.vue'
 
 import axios from 'axios'
 
@@ -50,21 +50,6 @@ const router = new Router({
             path: '',
             name: 'homepage',
             component: Homepage
-        },
-        {
-            path: '/contact-us',
-            name: 'contactUs',
-            component: ContactUs
-        },
-        {
-            path: '/developer-center',
-            name: 'developerCenter',
-            component: DeveloperCenter
-        },
-        {
-            path: '/FAQs',
-            name: 'FAQs',
-            component: FAQs
         },
         {
             path: '/admin/login',
@@ -212,9 +197,9 @@ const router = new Router({
             ]
         },
         {
-            path: '/legal',
-            name: 'legal',
-            component: Legal,
+            path: '/help-center',
+            name: 'helpCenter',
+            component: HelpCenter,
             children: [
                 {
                     path: 'legal-notices',
@@ -230,6 +215,21 @@ const router = new Router({
                     path: 'TermsOfService',
                     name: 'TermsOfService',
                     component: TermsOfService
+                },
+                {
+                    path: 'contact-us',
+                    name: 'contactUs',
+                    component: ContactUs
+                },
+                {
+                    path: 'developer-center',
+                    name: 'developerCenter',
+                    component: DeveloperCenter
+                },
+                {
+                    path: 'FAQs',
+                    name: 'FAQs',
+                    component: FAQs
                 },
             ]
         }

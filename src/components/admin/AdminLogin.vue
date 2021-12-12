@@ -54,7 +54,11 @@
                     >
                   </v-col>
                   <v-col class="pa-0 text-right">
-                    <a class="white--text">Forgot password?</a>
+                    <a
+                      class="white--text"
+                      @click="goToRouterLink('adminForgotPassword')"
+                      >Forgot password?</a
+                    >
                   </v-col>
                 </v-row>
               </v-container>

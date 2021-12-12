@@ -104,6 +104,19 @@ import axios from "axios";
 
 export default {
   name: "StudentRegister",
+  watch: {
+    $route(to) {
+      console.log(to);
+      if (
+        to.name.localeCompare("studentSearch") !== 0 &&
+        this.searchValue.length > 0
+      ) {
+        console.log("ah yes");
+        this.searchValue = "";
+        this.searchHidden = false;
+      }
+    },
+  },
   methods: {
     search() {
       if (this.searchValue.length == 1) {

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main id="upper">
-      <v-container fluid>
+      <v-container fluid class="">
         <v-row>
           <v-col class="">
             <div
@@ -41,7 +41,7 @@
                   v-bind:value="password"
                   type="password"
                 ></v-text-field>
-                
+
                 <v-btn dark color="#D50000" @click="login()" block>Login</v-btn>
               </div>
 
@@ -55,7 +55,11 @@
                     >
                   </v-col>
                   <v-col class="pa-0 text-right">
-                    <a class="white--text">Forgot password?</a>
+                    <a
+                      class="white--text"
+                      @click="goToRouterLink('studentForgotPassword')"
+                      >Forgot password?</a
+                    >
                   </v-col>
                 </v-row>
               </v-container>
@@ -71,20 +75,20 @@
         </v-row>
       </v-container>
     </v-main>
-    <v-footer color='black' dark>
-      <Footer/>
+    <v-footer color="black" dark>
+      <Footer />
     </v-footer>
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
-import Footer from '../Footer.vue';
+import Footer from "../Footer.vue";
 
 export default {
   name: "StudentLogin",
   components: {
-      Footer
+    Footer,
   },
   data() {
     return {

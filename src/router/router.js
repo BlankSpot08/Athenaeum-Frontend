@@ -17,7 +17,8 @@ import AdminBookList from '../components/admin/AdminBookList'
 import AdminBookUpdate from '../components/admin/AdminBookUpdate'
 import AdminStudentList from '../components/admin/AdminStudentList'
 import AdminAdminConfirmation from '../components/admin/AdminAdminConfirmation'
-import AdminProfile from '../components/admin/AdminProfile'
+import AdminForgotPassword from '../components/admin/AdminForgotPassword'
+import AdminResetPassword from '../components/admin/AdminResetPassword'
 
 import StudentLogin from '../components/student/StudentLogin'
 import StudentRegister from '../components/student/StudentRegister'
@@ -31,6 +32,8 @@ import StudentProfile from '../components/student/StudentProfile'
 import StudentPenalty from '../components/student/StudentPenalty'
 import StudentBook from '../components/student/StudentBook'
 import StudentSearch from '../components/student/StudentSearch'
+import StudentForgotPassword from '../components/student/StudentForgotPassword'
+import StudentResetPassword from '../components/student/StudentResetPassword'
 
 import LegalNotices from '../components/legal/LegalNotices'
 import Privacy from '../components/legal/Privacy'
@@ -49,18 +52,18 @@ const router = new Router({
             component: Homepage
         },
         {
-            path: 'ContactUs',
+            path: '/contact-us',
             name: 'contactUs',
             component: ContactUs
         },
         {
-            path: 'DeveloperCenter',
+            path: '/developer-center',
             name: 'developerCenter',
             component: DeveloperCenter
         },
         {
-            path: 'FAQs',
-            name: 'fAQs',
+            path: '/FAQs',
+            name: 'FAQs',
             component: FAQs
         },
         {
@@ -72,6 +75,16 @@ const router = new Router({
             path: '/admin/register',
             name: 'adminRegister',
             component: AdminRegister
+        },
+        {
+            path: '/admin/forgot-password/:status?',
+            name: 'adminForgotPassword',
+            component: AdminForgotPassword
+        },
+        {
+            path: '/admin/reset-password/token/:status',
+            name: 'adminResetPassword',
+            component: AdminResetPassword
         },
         {
             path: '/admin/',
@@ -121,11 +134,6 @@ const router = new Router({
                     name: 'adminAdminConfirmation',
                     component: AdminAdminConfirmation,
                 },
-                {
-                    path: 'profile',
-                    name: 'adminProfile',
-                    component: AdminProfile,
-                },
             ],
         },
         {
@@ -137,6 +145,16 @@ const router = new Router({
             path: '/student/register',
             name: 'studentRegister',
             component: StudentRegister
+        },
+        {
+            path: '/student/forgot-password/:status?',
+            name: 'studentForgotPassword',
+            component: StudentForgotPassword
+        },
+        {
+            path: '/student/reset-password/token/:status',
+            name: 'studentResetPassword',
+            component: StudentResetPassword
         },
         {
             path: '/student',

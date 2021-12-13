@@ -74,6 +74,11 @@ const router = new Router({
             component: AdminResetPassword
         },
         {
+            path: '/developer-center',
+            name: 'developerCenter',
+            component: DeveloperCenter
+        },
+        {
             path: '/admin/',
             name: 'admin',
             component: Admin,
@@ -229,11 +234,6 @@ const router = new Router({
                     path: 'contact-us',
                     name: 'contactUs',
                     component: ContactUs
-                },
-                {
-                    path: 'developer-center',
-                    name: 'developerCenter',
-                    component: DeveloperCenter
                 },
                 {
                     path: 'FAQs',

@@ -17,32 +17,48 @@
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
-            label="Search student's name"
-            background-color="white"
-            light
-            filled
-            v-model="search_data.name"
-          ></v-text-field>
-          <v-text-field
-            class="mx-3 mt-n5"
             label="Search ISBN"
             background-color="white"
             light
             filled
             v-model="search_data.isbn"
           ></v-text-field>
+          <v-text-field
+            class="mx-3 mt-n5"
+            label="Search title"
+            background-color="white"
+            light
+            filled
+            v-model="search_data.title"
+          ></v-text-field>
         </v-card-actions>
 
         <v-card-actions class="mt-0">
           <v-col>
-            <v-text-field
-              class="mt-n10"
-              label="Search title of the book"
-              background-color="white"
-              light
-              filled
-              v-model="search_data.title"
-            ></v-text-field>
+            <v-menu
+              :close-on-content-click="false"
+              :nudge-bottom="55"
+              min-width="auto"
+              transition="scale-transition"
+            >
+              <template class="" v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  class="mt-n10"
+                  clearable
+                  v-model="search_data.date_requested"
+                  background-color="white"
+                  light
+                  v-bind="attrs"
+                  v-on="on"
+                  label="Date Requested"
+                  append-icon="mdi-calendar-range"
+                  filled
+                  readonly
+                ></v-text-field>
+              </template>
+              <v-date-picker v-model="search_data.date_requested">
+              </v-date-picker>
+            </v-menu>
           </v-col>
           <v-col></v-col>
           <v-col class="text-right">
@@ -65,9 +81,9 @@
             <thead>
               <tr>
                 <th class="text-subtitle-1 text-left">ID Number</th>
-                <th class="text-subtitle-1 text-left">Student's Name</th>
                 <th class="text-subtitle-1 text-left">ISBN</th>
-                <th class="text-subtitle-1 text-left">Title of the book</th>
+                <th class="text-subtitle-1 text-left">Title</th>
+                <th class="text-subtitle-1 text-left">Date Requested</th>
                 <th class="text-subtitle-1 text-left">Fine</th>
                 <th class="text-subtitle-1 text-left"></th>
               </tr>
@@ -77,19 +93,23 @@
                 <td>
                   {{ value.student_id }}
                 </td>
-                <td>
-                  {{ value.student.lastname }}, {{ value.student.firstname }}
-                  {{ value.student.middlename }}.
-                </td>
+
                 <td>
                   {{ value.book_entered.book.isbn }}
                 </td>
+
                 <td>
                   {{ value.book_entered.book.title }}
                 </td>
+
+                <td>
+                  {{ value.date_requested }}
+                </td>
+
                 <td>
                   {{ value.student.balance }}
                 </td>
+
                 <td class="text-right">
                   <v-dialog
                     max-width="500"
@@ -216,9 +236,9 @@ export default {
       return_requests: {},
       search_data: {
         id: "",
-        name: "",
         isbn: "",
         title: "",
+        date_requested: "",
       },
     };
   },

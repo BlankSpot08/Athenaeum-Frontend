@@ -4,33 +4,19 @@
       <v-container fluid class="">
         <v-row>
           <v-col class="">
-            <div
-              class="red--text text--accent-4 ml-16 text-h4 font-weight-bold"
-            >
-              ATHENAEUM
+            <div class="">
+              <a
+                @click="goToRouterLink('homepage')"
+                class="red--text text--accent-4 ml-16 text-h4 font-weight-bold"
+              >
+                ATHENAEUM
+              </a>
             </div>
           </v-col>
         </v-row>
+
         <v-row class="mt-16 pt-16">
-          <v-container fluid v-if="status.localeCompare('expired') === 0">
-            <v-row justify="center" class="">
-              <v-col class="px-10 py-8" lg="4" id="loginBody"
-                ><div class="mb-6">
-                  <div class="text-h6">Bad Token</div>
-
-                  <div>
-                    The password reset link was invalid, possibly because it has
-                    already expired. Please request a
-                    <router-link :to="{ name: 'adminForgotPassword' }"
-                      >new password reset</router-link
-                    >.
-                  </div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
-
-          <v-container fluid v-else-if="status === 'done'">
+          <v-container fluid v-if="status === 'done'">
             <v-row justify="center" class="">
               <v-col class="px-10 py-8" lg="4" id="loginBody">
                 <div class="mb-6">
@@ -52,7 +38,7 @@
             </v-row>
           </v-container>
 
-          <v-container fluid v-else>
+          <v-container fluid v-else-if="status.localeCompare('active') === 0">
             <v-row justify="center" class="">
               <v-col class="px-10 py-8" lg="4" id="loginBody">
                 <div class="mb-6">
@@ -86,6 +72,40 @@
               </v-col>
             </v-row>
           </v-container>
+
+          <v-container fluid v-else>
+            <v-row justify="center" class="">
+              <v-col class="px-10 py-8" lg="4" id="loginBody">
+                <div class="mb-6">
+                  <div class="text-h6">Bad Token</div>
+
+                  <div v-if="status.localeCompare('expired') === 0">
+                    The password reset link was invalid, because the token has
+                    already expired. Please request a
+                    <router-link :to="{ name: 'adminForgotPassword' }"
+                      >new password reset</router-link
+                    >.
+                  </div>
+
+                  <div v-else-if="status.localeCompare('missing') === 0">
+                    The password reset link was invalid, because the token is
+                    missing. Please request a
+                    <router-link :to="{ name: 'adminForgotPassword' }"
+                      >new password reset</router-link
+                    >.
+                  </div>
+
+                  <div v-else-if="status.localeCompare('failed') === 0">
+                    The password reset link was invalid, because the token is
+                    unauthorized. Please request a
+                    <router-link :to="{ name: 'adminForgotPassword' }"
+                      >new password reset</router-link
+                    >.
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-row>
       </v-container>
     </v-main>
@@ -113,31 +133,24 @@ export default {
       } else {
         const tokenStatus = await this.checkToken();
 
-        if (tokenStatus.localeCompare("expired")) {
-          this.status = "expired";
-        }
+        this.status = tokenStatus;
       }
-
-      console.log(this.status);
     },
   },
   async mounted() {
     const tokenStatus = await this.checkToken();
 
-    if (tokenStatus.localeCompare("expired") === 0) {
-      this.status = "expired";
-    }
-
-    console.log(tokenStatus);
+    this.status = tokenStatus;
   },
   methods: {
     async resetPassword() {
-      console.log("ah yes");
       await axios.post("resetPassword/admin", {
         token: this.$route.params.status,
         newPassword: this.password,
       });
 
+      this.password = "";
+      this.confirmPassword = "";
       this.goToRouterLink("adminResetPassword", "done");
     },
     async checkToken() {

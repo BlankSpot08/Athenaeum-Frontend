@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <v-container class="">
+      <v-container>
         <a class="black--text" @click="$router.go(-1)">
           <v-icon>mdi-arrow-left</v-icon>
           Back
@@ -42,7 +42,7 @@
               <v-btn
                 outlined
                 tile
-                @click="scrollUpTo(), goToRouterLink('contactUs')"
+                @click="scrollToTop(), goToRouterLink('contactUs')"
                 >Call us</v-btn
               >
             </v-col>

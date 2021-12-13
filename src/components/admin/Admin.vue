@@ -10,10 +10,10 @@
             text--accent-4 text-h5 text-center
             font-weight-bold
           "
-          id="border"
         >
           ATHENAEUM
         </div>
+        <v-divider />
       </template>
       <v-list class="">
         <v-list-item-group v-model="selectedItem" color="white">

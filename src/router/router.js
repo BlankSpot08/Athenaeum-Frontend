@@ -18,8 +18,12 @@ import AdminAdminConfirmation from '../components/admin/AdminAdminConfirmation'
 import AdminForgotPassword from '../components/admin/AdminForgotPassword'
 import AdminResetPassword from '../components/admin/AdminResetPassword'
 
-import StudentLogin from '../components/student/StudentLogin'
-import StudentRegister from '../components/student/StudentRegister'
+import StudentLogin from '../components/student/account/StudentLogin'
+import StudentRegister from '../components/student/account/StudentRegister'
+import StudentForgotPassword from '../components/student/account/StudentForgotPassword'
+import StudentResetPassword from '../components/student/account/StudentResetPassword'
+import StudentAccount from '../components/student/account/StudentAccount'
+
 import Student from '../components/student/Student'
 import StudentHome from '../components/student/StudentHome'
 import StudentReadAgain from '../components/student/StudentReadAgain'
@@ -30,8 +34,6 @@ import StudentProfile from '../components/student/StudentProfile'
 import StudentPenalty from '../components/student/StudentPenalty'
 import StudentBook from '../components/student/StudentBook'
 import StudentSearch from '../components/student/StudentSearch'
-import StudentForgotPassword from '../components/student/StudentForgotPassword'
-import StudentResetPassword from '../components/student/StudentResetPassword'
 
 import LegalNotices from '../components/helpCenter/LegalNotices'
 import Privacy from '../components/helpCenter/Privacy'
@@ -122,24 +124,31 @@ const router = new Router({
             ],
         },
         {
-            path: '/student/login',
-            name: 'studentLogin',
-            component: StudentLogin
-        },
-        {
-            path: '/student/register',
-            name: 'studentRegister',
-            component: StudentRegister
-        },
-        {
-            path: '/student/forgot-password/:status?',
-            name: 'studentForgotPassword',
-            component: StudentForgotPassword
-        },
-        {
-            path: '/student/reset-password/token/:status',
-            name: 'studentResetPassword',
-            component: StudentResetPassword
+            path: '/student/account',
+            name: 'studentAccount',
+            component: StudentAccount,
+            children: [
+                {
+                    path: 'login',
+                    name: 'studentLogin',
+                    component: StudentLogin
+                },
+                {
+                    path: 'register',
+                    name: 'studentRegister',
+                    component: StudentRegister
+                },
+                {
+                    path: 'forgot-password/:status?',
+                    name: 'studentForgotPassword',
+                    component: StudentForgotPassword
+                },
+                {
+                    path: 'reset-password/token/:status',
+                    name: 'studentResetPassword',
+                    component: StudentResetPassword
+                },
+            ]
         },
         {
             path: '/student',

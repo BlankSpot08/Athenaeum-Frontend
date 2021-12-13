@@ -64,22 +64,15 @@
         </v-row>
       </v-container>
     </v-main>
-
-    <v-footer color="black" dark>
-      <Footer />
-    </v-footer>
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
-import Footer from "../Footer.vue";
 
 export default {
   name: "StudentRegister",
-  components: {
-    Footer,
-  },
+  components: {},
   data() {
     return {
       idNumber: "",
@@ -112,25 +105,4 @@ export default {
 </script>
 
 <style>
-#loginBody {
-  background-color: rgba(0, 0, 0, 0.75);
-}
-#upper {
-  position: relative;
-  background-color: black;
-  color: white;
-}
-
-#upper::before {
-  content: "";
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  background-image: url("../../assets/homepagebg.jpeg");
-  background-size: 100% 100%;
-
-  opacity: 0.4;
-}
 </style>

@@ -26,10 +26,10 @@
           </div>
         </v-col>
         <v-col align-self="start">
-          <div class="mb-3">
-            <a class="grey--text">Development Center</a>
+          <div class="mb-3 text-center">
+            <a class="grey--text">Developer Center</a>
           </div>
-          <div class="mb-3">
+          <div class="mb-3 text-center">
             <a
               class="grey--text"
               @click="scrollToTop(), goToRouterLink('contactUs')"
@@ -38,14 +38,26 @@
           </div>
         </v-col>
         <v-col>
-          <div class="mb-3">
-            <a class="grey--text">Privacy</a>
+          <div class="mb-3 text-right">
+            <a
+              class="grey--text"
+              @click="scrollToTop(), goToRouterLink('TermsOfService')"
+              >Terms of Service</a
+            >
           </div>
-          <div class="mb-3">
-            <a class="grey--text">Terms of Service</a>
+          <div class="mb-3 text-right">
+            <a
+              class="grey--text"
+              @click="scrollToTop(), goToRouterLink('legalNotices')"
+              >Legal Notices</a
+            >
           </div>
-          <div>
-            <a class="grey--text">Legal Notices</a>
+          <div class="text-right">
+            <a
+              class="grey--text"
+              @click="scrollToTop(), goToRouterLink('privacy')"
+              >Privacy</a
+            >
           </div>
         </v-col>
       </v-card-actions>

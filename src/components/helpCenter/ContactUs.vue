@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <v-container class="mt-8">
+      <v-container>
         <a class="black--text" @click="$router.go(-1)">
           <v-icon>mdi-arrow-left</v-icon>
           Back
@@ -13,9 +13,9 @@
           Call us from any phone
         </div>
         <div v-for="item in items" :key="item.phone" class="text-h6">
-          <p>{{ item.phone }}</p>
+          <p class="mb-n1">{{ item.phone }}</p>
         </div>
-        <p>{{ items[2].moreInfo }}</p>
+        <p class="mt-5">{{ items[2].moreInfo }}</p>
 
         <v-divider></v-divider>
       </v-container>
@@ -29,8 +29,8 @@ export default {
   data() {
     return {
       items: [
-        { phone: "-09673327890" },
-        { phone: "-09923787289" },
+        { phone: "- 09673327890" },
+        { phone: "- 09923787289" },
         {
           moreInfo:
             "You can only use Philippine number on order to reach these contacts.",

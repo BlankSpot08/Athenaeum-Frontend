@@ -74,7 +74,7 @@
               <tr>
                 <th class="text-subtitle-1 text-left">ID Number</th>
                 <th class="text-subtitle-1 text-left">Name</th>
-                <th class="text-subtitle-1 text-left">Email Address</th>
+                <th class="text-subtitle-1 text-left">Email</th>
                 <th class="text-subtitle-1 text-left">Contact No.</th>
                 <th class="text-subtitle-1 text-left">Guardian Contact No.</th>
                 <th class="text-subtitle-1 text-left">Balance</th>
@@ -192,6 +192,7 @@ export default {
       });
 
       this.students = search;
+      console.log(this.students);
     },
     async pay(value, index) {
       const token = JSON.parse(localStorage.getItem("token"));

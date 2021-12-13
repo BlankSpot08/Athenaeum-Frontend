@@ -460,7 +460,7 @@ export default {
         title: "",
         synopsis: "",
         category: "",
-        publication_year: "",
+        publication_year: Date(),
         tags: [],
         image_path: "",
         authors: [],

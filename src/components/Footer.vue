@@ -27,7 +27,11 @@
         </v-col>
         <v-col align-self="start">
           <div class="mb-3 text-center">
-            <a class="grey--text">Developer Center</a>
+            <a
+              class="grey--text"
+              @click="scrollToTop(), goToRouterLink('developerCenter')"
+              >Developer Center</a
+            >
           </div>
           <div class="mb-3 text-center">
             <a

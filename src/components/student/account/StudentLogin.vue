@@ -99,6 +99,9 @@ export default {
     };
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     goToRouterLink(name) {
       this.$router.push({ name: name });
     },

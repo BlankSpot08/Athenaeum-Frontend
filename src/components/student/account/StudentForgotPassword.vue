@@ -103,6 +103,9 @@ export default {
     },
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     goToRouterLink(name, status) {
       this.$router.push({ name: name, params: { status: status } });
     },

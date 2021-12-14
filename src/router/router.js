@@ -4,8 +4,6 @@ import Router from 'vue-router'
 import Homepage from '../components/Homepage.vue'
 import DeveloperCenter from '../components/DeveloperCenter.vue'
 
-import AdminLogin from '../components/admin/AdminLogin'
-import AdminRegister from '../components/admin/AdminRegister'
 import Admin from '../components/admin/Admin'
 import AdminOverview from '../components/admin/AdminOverview'
 import AdminBookEntry from '../components/admin/AdminBookEntry'
@@ -15,14 +13,18 @@ import AdminBookList from '../components/admin/AdminBookList'
 import AdminBookUpdate from '../components/admin/AdminBookUpdate'
 import AdminStudentList from '../components/admin/AdminStudentList'
 import AdminAdminConfirmation from '../components/admin/AdminAdminConfirmation'
-import AdminForgotPassword from '../components/admin/AdminForgotPassword'
-import AdminResetPassword from '../components/admin/AdminResetPassword'
 
+import StudentAccount from '../components/student/account/StudentAccount'
 import StudentLogin from '../components/student/account/StudentLogin'
 import StudentRegister from '../components/student/account/StudentRegister'
 import StudentForgotPassword from '../components/student/account/StudentForgotPassword'
 import StudentResetPassword from '../components/student/account/StudentResetPassword'
-import StudentAccount from '../components/student/account/StudentAccount'
+
+import AdminAccount from '../components/admin/account/AdminAccount'
+import AdminLogin from '../components/admin/account/AdminLogin'
+import AdminRegister from '../components/admin/account/AdminRegister'
+import AdminForgotPassword from '../components/admin/account/AdminForgotPassword'
+import AdminResetPassword from '../components/admin/account/AdminResetPassword'
 
 import Student from '../components/student/Student'
 import StudentHome from '../components/student/StudentHome'
@@ -54,24 +56,31 @@ const router = new Router({
             component: Homepage
         },
         {
-            path: '/admin/login',
-            name: 'adminLogin',
-            component: AdminLogin
-        },
-        {
-            path: '/admin/register',
-            name: 'adminRegister',
-            component: AdminRegister
-        },
-        {
-            path: '/admin/forgot-password/:status?',
-            name: 'adminForgotPassword',
-            component: AdminForgotPassword
-        },
-        {
-            path: '/admin/reset-password/token/:status',
-            name: 'adminResetPassword',
-            component: AdminResetPassword
+            path: '/admin/account',
+            name: 'adminAccount',
+            component: AdminAccount,
+            children: [
+                {
+                    path: 'login',
+                    name: 'adminLogin',
+                    component: AdminLogin
+                },
+                {
+                    path: 'register',
+                    name: 'adminRegister',
+                    component: AdminRegister
+                },
+                {
+                    path: 'forgot-password/:status?',
+                    name: 'adminForgotPassword',
+                    component: AdminForgotPassword
+                },
+                {
+                    path: 'reset-password/token/:status',
+                    name: 'adminResetPassword',
+                    component: AdminResetPassword
+                },
+            ]
         },
         {
             path: '/developer-center',

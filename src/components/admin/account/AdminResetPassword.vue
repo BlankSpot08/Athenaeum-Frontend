@@ -45,23 +45,27 @@
                   <div class="text-h6">Reset Password</div>
                 </div>
 
-                <v-text-field
-                  dark
-                  class="py-1 my-1"
-                  label="Password"
-                  v-model="password"
-                  type="password"
-                ></v-text-field>
-                <v-text-field
-                  dark
-                  class="py-1 my-1"
-                  label="Confirm Password"
-                  v-model="confirmPassword"
-                  type="password"
-                ></v-text-field>
-                <v-btn dark color="#D50000" @click="resetPassword()" block
-                  >Reset Password</v-btn
-                >
+                <v-form ref="form">
+                  <v-text-field
+                    dark
+                    class="py-1 my-1"
+                    label="Password"
+                    v-model="password"
+                    :rules="passwordRules"
+                    type="password"
+                  ></v-text-field>
+                  <v-text-field
+                    dark
+                    class="py-1 my-1"
+                    label="Confirm Password"
+                    v-model="confirmPassword"
+                    :rules="confirmPasswordRules"
+                    type="password"
+                  ></v-text-field>
+                  <v-btn dark color="#D50000" @click="resetPassword()" block
+                    >Reset Password</v-btn
+                  >
+                </v-form>
               </v-col>
             </v-row>
             <v-row class="">
@@ -122,6 +126,12 @@ export default {
       password: "",
       confirmPassword: "",
       status: this.$route.params.status || "",
+      passwordRules: [
+        (v) => v.length > 5 || "Must contain atleast 6 characters",
+      ],
+      confirmPasswordRules: [
+        (v) => (v == this.password && v.length > 0) || "Password mismatch",
+      ],
     };
   },
   watch: {
@@ -138,20 +148,28 @@ export default {
     },
   },
   async mounted() {
-    const tokenStatus = await this.checkToken();
+    const status = this.$route.params.status;
 
-    this.status = tokenStatus;
+    if (status.localeCompare("done") === 0) {
+      this.status = "done";
+    } else {
+      const tokenStatus = await this.checkToken();
+
+      this.status = tokenStatus;
+    }
   },
   methods: {
     async resetPassword() {
-      await axios.post("resetPassword/admin", {
-        token: this.$route.params.status,
-        newPassword: this.password,
-      });
+      if (this.$refs.form.validate()) {
+        await axios.post("resetPassword/admin", {
+          token: this.$route.params.status,
+          newPassword: this.password,
+        });
 
-      this.password = "";
-      this.confirmPassword = "";
-      this.goToRouterLink("adminResetPassword", "done");
+        this.password = "";
+        this.confirmPassword = "";
+        this.goToRouterLink("adminResetPassword", "done");
+      }
     },
     async checkToken() {
       try {
@@ -172,26 +190,4 @@ export default {
 </script>
 
 <style>
-#loginBody {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-#upper {
-  position: relative;
-  background-color: black;
-  color: white;
-}
-
-#upper::before {
-  content: "";
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  background-image: url("../../assets/homepagebg.jpeg");
-  background-size: 100% 100%;
-
-  opacity: 0.4;
-}
 </style>

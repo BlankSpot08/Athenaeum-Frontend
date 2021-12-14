@@ -28,7 +28,7 @@
       <v-container class="">
         <v-row justify="center">
           <v-col class="text-center">
-            <div class="text-h1">Meet the Team</div>
+            <div class="text-h1">Meet the Team!!!!</div>
             <div>
               Browse our directory of developers who worked hard to make the
               succession of Athenaeum's creation.
@@ -314,7 +314,7 @@ export default {
           link: [
             {
               title: "LinkedIn",
-              go: "https://www.linkedin.com/in/jemuel-anacio-0b58a6227",
+              go: "https://www.linkedin.com/in/adrian-igama-b5603b1b2/",
               icon: {
                 name: "mdi-linkedin",
                 color: "blue",

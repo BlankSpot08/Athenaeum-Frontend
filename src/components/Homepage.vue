@@ -15,7 +15,7 @@
         <v-row class="pt-16">
           <v-col>
             <div class="text-center text-h2">
-              Unlimited Books for education, <br />
+              Unlimited books for education, <br />
               entertainment, and more.
             </div>
           </v-col>
@@ -78,11 +78,21 @@
           <v-col class="text-right">
             <v-img
               src="../assets/books.jpg"
+              lazy-src="../assets/books.jpg"
               height="250"
               width="400"
               max-height="400"
               max-width="400"
-            />
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
           </v-col>
         </v-row>
 
@@ -98,11 +108,25 @@
               <v-img
                 class="ml-auto"
                 src="../assets/favorite_book.jpg"
+                lazy-src="../assets/favorite_book.jpg"
                 height="250"
                 width="400"
                 max-height="400"
                 max-width="400"
-              />
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
             </div>
           </v-col>
 
@@ -133,9 +157,19 @@
           <v-col class="">
             <v-img
               src="../assets/explore_book.jpg"
+              lazy-src="../assets/explore_book.jpg"
               max-height="400"
               max-width="400"
-            />
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
           </v-col>
         </v-row>
 

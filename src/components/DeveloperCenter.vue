@@ -3,7 +3,7 @@
     <v-app-bar dark color="black" height="58" class="">
       <a
         class="red--text text--accent-4 ml-16 text-h4 font-weight-bold"
-        @click="scrollToTop(), goToRouterLink('homepage')"
+        @click="goToRouterLink('homepage')"
       >
         ATHENAEUM
       </a>
@@ -12,17 +12,31 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn outlined @click="scrollToTop(), goToRouterLink('studentRegister')">
+      <v-btn outlined @click="goToRouterLink('studentRegister')">
         Join Athenaeum
       </v-btn>
 
       <v-btn
         color="#D50000"
         class="ml-5"
-        @click="scrollToTop(), goToRouterLink('studentLogin')"
+        @click="goToRouterLink('studentLogin')"
         >Sign In</v-btn
       >
     </v-app-bar>
+
+    <v-btn
+      v-scroll="onScroll"
+      v-show="fab"
+      fab
+      dark
+      fixed
+      bottom
+      right
+      color="primary"
+      @click="toTop"
+    >
+      <v-icon>keyboard_arrow_up</v-icon>
+    </v-btn>
 
     <v-main class="">
       <v-container class="">
@@ -71,7 +85,14 @@
                 {{ developer.positions.join(" • ") }}
               </v-card-subtitle>
 
-              <a id="viewProfile" class="mb-3 ml-n10">View Profile</a>
+              <a
+                id="viewProfile"
+                class="mb-3 ml-n10"
+                @click="
+                  scrollDownTo(developer.coordinates.x, developer.coordinates.y)
+                "
+                >View Profile</a
+              >
             </v-card>
           </v-col>
         </v-row>
@@ -196,21 +217,35 @@ export default {
     vuePlayer,
   },
   methods: {
-    scrollToTop() {
-      window.scrollTo(0, 0);
+    scrollDownTo(x, y) {
+      // window.scrollTo(x, y);
+      this.$vuetify.goTo(y);
     },
     goToRouterLink(name) {
       this.$router.push({ name: name });
     },
+    onScroll(e) {
+      if (typeof window === "undefined") return;
+      const top = window.pageYOffset || e.target.scrollTop || 0;
+      this.fab = top > 20;
+    },
+    toTop() {
+      this.$vuetify.goTo(0);
+    },
   },
   data() {
     return {
+      fab: false,
       developers: [
         {
           name: "Jemuel Anacio",
           address: "Quezon City, Philippines",
           profile: "jemuel.png",
           contactno: "09673327890",
+          coordinates: {
+            x: 610,
+            y: 610,
+          },
           biography:
             "Jemuel Anacio is front-end and leading developer of the project Athenaeum. He is college student in New Era University with a degree of Bachelor of Science in Computer Science. He is a scholar of one of the biggest government scholarship which is the Department of Science and Technology (DOST) scholarship. He is a fast learner student and loves to explore things when he got interested in. When in comes in developing a web, he is more skillful in designing. When he's not on keyboard working he is more into games, not only as an entertainment but also learning. Learning how was it build or how was it developed. Find him on Facebook: Jemuel Anacio.",
           motto: "There's no such thing as best, there always has better.",
@@ -256,6 +291,10 @@ export default {
           address: "Quezon City, Philippines",
           profile: "arduts.jpg",
           contactno: "09167090788",
+          coordinates: {
+            x: 2210,
+            y: 2210,
+          },
           biography:
             "Reuben Dominic J. Palabasan is a 3rd year student of Bachelor of Science in Computer Science. Always staying proactive, he ventured into a lot of different activities to show his talent.  He had the courage and determination to succeed, no matter how difficult the obstacles he had to overcome. He decided to pursue his degree in computer science because he wanted to increase his job chances and  wanted to work on various projects as well. He enjoys photography, watching movies, listening to music, and playing online games in his part time.",
           motto:
@@ -306,6 +345,10 @@ export default {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
           motto:
             "I believe that the key to success, is to develop a winning edge.",
+          coordinates: {
+            x: 3890,
+            y: 3890,
+          },
           positions: ["Data Gatherer"],
           video: {
             name: "adrian_video.mp4",
@@ -359,6 +402,10 @@ export default {
           biography:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
           motto: "Chu.",
+          coordinates: {
+            x: 5510,
+            y: 5510,
+          },
           positions: ["Full-Stack Developer"],
           link: [
             {

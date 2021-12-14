@@ -1,5 +1,5 @@
 <template>
-  <v-app id="body" v-if="admin.data">
+  <v-app id="body">
     <!-- navigation -->
     <v-navigation-drawer fixed app permanent left dark color="black">
       <template class="">

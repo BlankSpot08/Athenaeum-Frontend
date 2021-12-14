@@ -1,5 +1,26 @@
 <template>
   <v-app class="">
+    <v-app-bar dark color="black" height="58" class="">
+      <div
+        class="red--text text--accent-4 ml-16 text-h4 font-weight-bold"
+        @click="scrollToTop(), goToRouterLink('homepage')"
+      >
+        ATHENAEUM
+      </div>
+      <div class="mx-3 text-h5">|</div>
+      <div class="text-body-1">Developer Center</div>
+      <v-spacer></v-spacer>
+      <v-btn outlined @click="scrollToTop(), goToRouterLink('studentRegister')"
+        >Join Athenaeum</v-btn
+      >
+      <v-btn
+        color="#D50000"
+        class="ml-5"
+        @click="scrollToTop(), goToRouterLink('studentLogin')"
+        >Sign In</v-btn
+      >
+    </v-app-bar>
+
     <v-main class="">
       <v-container class="">
         <v-row justify="center">
@@ -93,6 +114,12 @@
                       </a>
                     </div>
                   </div>
+
+                  <div class="text-body-1 mt-5 mb-3">Contact Number</div>
+
+                  <div class="my-1 ml-7">
+                    <div class="text-body-2">• {{ developer.contactno }}</div>
+                  </div>
                 </div>
               </v-col>
 
@@ -166,6 +193,14 @@ export default {
   components: {
     vuePlayer,
   },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
+    goToRouterLink(name) {
+      this.$router.push({ name: name });
+    },
+  },
   data() {
     return {
       developers: [
@@ -173,6 +208,7 @@ export default {
           name: "Jemuel Anacio",
           address: "Quezon City, Philippines",
           profile: "jemuel.png",
+          contactno: "09673327890",
           biography:
             "Jemuel Anacio is front-end and leading developer of the project Athenaeum. He is college student in New Era University with a degree of Bachelor of Science in Computer Science. He is a scholar of one of the biggest government scholarship which is the Department of Science and Technology (DOST) scholarship. He is a fast learner student and loves to explore things when he got interested in. When in comes in developing a web, he is more skillful in designing. When he's not on keyboard working he is more into games, not only as an entertainment but also learning. Learning how was it build or how was it developed. Find him on Facebook: Jemuel Anacio.",
           motto: "There's no such thing as best, there always has better.",
@@ -217,8 +253,9 @@ export default {
           name: "Reuben Dominic Palabasan",
           address: "Quezon City, Philippines",
           profile: "arduts.jpg",
+          contactno: "09167090788",
           biography:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "Reuben Dominic J. Palabasan is a 3rd year student of Bachelor of Science in Computer Science. Always staying proactive, he ventured into a lot of different activities to show his talent.  He had the courage and determination to succeed, no matter how difficult the obstacles he had to overcome. He decided to pursue his degree in computer science because he wanted to increase his job chances and  wanted to work on various projects as well. He enjoys photography, watching movies, listening to music, and playing online games in his part time.",
           motto:
             "As a student, the most important thing to remember is laziness is your worst enemy and hardwork is your bestfriend.",
           positions: ["Data Gatherer"],
@@ -262,6 +299,7 @@ export default {
           name: "Adrian Jacient Igama",
           address: "Quezon City, Philippines",
           profile: "adrian.jpg",
+          contactno: "09167090788",
           biography:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
           motto:
@@ -315,6 +353,7 @@ export default {
           name: "Arvin P. Chu",
           address: "Pasig City, Philippines",
           profile: "arvin.jpg",
+          contactno: "09958214987",
           biography:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
           motto: "Chu.",

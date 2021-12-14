@@ -1,6 +1,6 @@
 <template>
-  <v-app
-    ><v-app-bar app dark color="black" height="58" class="">
+  <v-app>
+    <v-app-bar app dark color="black" height="58" class="">
       <div
         class="red--text text--accent-4 ml-16 text-h4 font-weight-bold"
         @click="scrollToTop(), goToRouterLink('homepage')"

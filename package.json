@@ -8,10 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@algoz098/vue-player": "^0.4.3",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "form-data": "^4.0.0",
-    "vue": "^2.6.11",
     "vue-router": "^3.5.2",
     "vuetify": "^2.4.0"
   },

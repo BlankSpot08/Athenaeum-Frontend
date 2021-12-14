@@ -1,18 +1,21 @@
 <template>
   <v-app class="">
     <v-app-bar dark color="black" height="58" class="">
-      <div
+      <a
         class="red--text text--accent-4 ml-16 text-h4 font-weight-bold"
         @click="scrollToTop(), goToRouterLink('homepage')"
       >
         ATHENAEUM
-      </div>
+      </a>
       <div class="mx-3 text-h5">|</div>
       <div class="text-body-1">Developer Center</div>
+
       <v-spacer></v-spacer>
-      <v-btn outlined @click="scrollToTop(), goToRouterLink('studentRegister')"
-        >Join Athenaeum</v-btn
-      >
+
+      <v-btn outlined @click="scrollToTop(), goToRouterLink('studentRegister')">
+        Join Athenaeum
+      </v-btn>
+
       <v-btn
         color="#D50000"
         class="ml-5"
@@ -42,10 +45,19 @@
           >
             <v-card
               width="270px"
-              height="400px"
+              height="375"
               class="text-center pa-5"
               elevation="5"
             >
+              <v-card-text>
+                <v-img
+                  :src="require(`@/assets/${developer.profile}`)"
+                  id="rounded-card"
+                  height="100"
+                  width="100"
+                  class="mx-auto"
+                />
+              </v-card-text>
               <v-card-text class="text-h6 mb-n8">
                 {{ developer.name }}
               </v-card-text>
@@ -58,18 +70,8 @@
               <v-card-subtitle>
                 {{ developer.positions.join(" • ") }}
               </v-card-subtitle>
-              <v-card-text> </v-card-text>
-              <v-card-text>
-                <v-img
-                  :src="require(`@/assets/${developer.profile}`)"
-                  id="rounded-card"
-                  height="100"
-                  width="100"
-                  class="mx-auto"
-                />
-              </v-card-text>
 
-              <a id="viewProfile" class="mb-3">View Profile</a>
+              <a id="viewProfile" class="mb-3 ml-n10">View Profile</a>
             </v-card>
           </v-col>
         </v-row>
@@ -408,5 +410,10 @@ export default {
 
 a {
   text-decoration: none;
+}
+
+#viewProfile {
+  position: absolute;
+  bottom: 0;
 }
 </style>

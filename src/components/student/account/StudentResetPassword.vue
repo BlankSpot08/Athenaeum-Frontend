@@ -143,6 +143,9 @@ export default {
     this.status = tokenStatus;
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     async resetPassword() {
       await axios.post("resetPassword/student", {
         token: this.$route.params.status,

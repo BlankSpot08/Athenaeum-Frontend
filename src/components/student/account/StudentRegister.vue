@@ -90,6 +90,9 @@ export default {
     };
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     async register() {
       await axios.post("registration/studentRegister", {
         id: this.idNumber,

@@ -4,7 +4,12 @@
       <v-container fluid>
         <v-row>
           <v-col class="">
-            <div class='red--text text--accent-4 ml-16 text-h4 font-weight-bold'>ATHENAEUM</div>
+            <a
+              class="red--text text--accent-4 ml-16 text-h4 font-weight-bold"
+              @click="scrollToTop(), goToRouterLink('homepage')"
+            >
+              ATHENAEUM
+            </a>
           </v-col>
         </v-row>
         <!-- first part -->

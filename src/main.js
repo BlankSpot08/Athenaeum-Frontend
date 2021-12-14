@@ -8,7 +8,7 @@ import './axios'
 Vue.config.productionTip = false
 
 new Vue({
-  vuetify, 
+  vuetify,
   router,
   render: h => h(App)
 }).$mount('#app')

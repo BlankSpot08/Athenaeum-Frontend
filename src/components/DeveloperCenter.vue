@@ -32,7 +32,7 @@
       fixed
       bottom
       right
-      color="primary"
+      color="black"
       @click="toTop"
     >
       <v-icon>keyboard_arrow_up</v-icon>
@@ -66,11 +66,25 @@
               <v-card-text>
                 <v-img
                   :src="require(`@/assets/${developer.profile}`)"
+                  :lazy-src="require(`@/assets/${developer.profile}`)"
                   id="rounded-card"
                   height="100"
                   width="100"
                   class="mx-auto"
-                />
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
               </v-card-text>
               <v-card-text class="text-h6 mb-n8">
                 {{ developer.name }}
@@ -111,10 +125,24 @@
                 <v-img
                   id="rounded-card"
                   class="mx-auto"
+                  :lazy-src="require(`@/assets/${developer.profile}`)"
                   :src="require(`@/assets/${developer.profile}`)"
                   width="200"
                   height="200"
-                />
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
                 <div class="mt-5">
                   <div class="text-h6">{{ developer.name }}</div>
                   <div class="text-body-2">{{ developer.address }}</div>
@@ -194,8 +222,23 @@
                       max-width="200"
                       height="300"
                       width="200"
+                      :lazy-src="require(`@/assets/${photo}`)"
                       :src="require(`@/assets/${photo}`)"
-                    />
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          >
+                          </v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
                   </v-col>
                 </v-row>
               </v-container>

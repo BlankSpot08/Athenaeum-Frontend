@@ -85,8 +85,8 @@ export default {
   name: "AdminLogin",
   data() {
     return {
-      idNumber: "19-11691-944",
-      password: "09997874755",
+      idNumber: "",
+      password: "",
       inputRules: [(v) => v.length > 0 || "This field required"],
     };
   },

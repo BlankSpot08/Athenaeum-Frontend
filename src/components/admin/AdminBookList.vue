@@ -14,6 +14,7 @@
             light
             filled
             v-model="search_data.isbn"
+            height="50"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -22,6 +23,7 @@
             light
             filled
             v-model="search_data.title"
+            height="50"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -30,6 +32,7 @@
             light
             filled
             v-model="search_data.category"
+            height="50"
           ></v-text-field>
         </v-card-actions>
         <v-card-actions class="mt-0">
@@ -41,6 +44,7 @@
               light
               filled
               v-model="search_data.author_name"
+              height="50"
             ></v-text-field>
           </v-col>
           <v-col>
@@ -51,6 +55,7 @@
               light
               filled
               v-model="search_data.publisher_name"
+              height="50"
             ></v-text-field>
           </v-col>
           <v-col class="text-right">
@@ -58,8 +63,9 @@
               class="mt-n15"
               width="200"
               color="#D50000"
-              x-large
+              large
               @click="search()"
+              height="50"
               >Search</v-btn
             >
           </v-col>
@@ -77,7 +83,6 @@
                 <th class="text-subtitle-1 text-left">Publisher</th>
                 <th class="text-subtitle-1 text-left">Category</th>
                 <th class="text-subtitle-1 text-left">Price</th>
-                <th class="text-subtitle-1 text-left" />
                 <th class="text-subtitle-1 text-left" />
               </tr>
             </thead>
@@ -99,6 +104,8 @@
                 <td class="text-right">
                   <v-btn
                     @click="goToBookUpdateLink('adminBookUpdate', value.isbn)"
+                    color="#D50000"
+                    dark
                   >
                     Edit
                   </v-btn>
@@ -174,3 +181,11 @@ export default {
   },
 };
 </script>
+<style scope>
+.v-text-field .v-input__control .v-input__slot {
+  min-height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 15px;
+}
+</style>

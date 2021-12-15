@@ -47,6 +47,7 @@
                 background-color="white"
                 light
                 @change="addNewBookCover($event)"
+                height="50"
               >
               </v-file-input>
             </v-col>
@@ -60,6 +61,7 @@
                 background-color="white"
                 label="Category"
                 filled
+                height="50"
               >
               </v-combobox>
             </v-col>
@@ -72,6 +74,7 @@
                 name="new_isbn_number"
                 class="mx-1"
                 background-color="white"
+                height="50"
                 light
                 label="ISBN"
                 placeholder="Type the ISBN"
@@ -83,7 +86,9 @@
               <v-combobox
                 name="tags"
                 class="mx-1"
-                height="10"
+                height="50"
+                max-height="550"
+                max-width="311"
                 background-color="white"
                 light
                 v-model="book.data.tags"
@@ -120,6 +125,7 @@
                 label="Edition"
                 placeholder="Type the book's edition"
                 filled
+                height="50"
               >
               </v-text-field>
             </v-col>
@@ -143,6 +149,7 @@
                     append-icon="mdi-calendar-range"
                     filled
                     readonly
+                    height="50"
                   ></v-text-field>
                 </template>
                 <v-date-picker v-model="book.data.publication_year" />
@@ -161,6 +168,7 @@
                 label="Title"
                 placeholder="Type the book's title"
                 filled
+                height="50"
               ></v-text-field>
             </v-col>
 
@@ -174,6 +182,7 @@
                 label="Price"
                 placeholder="Type the book's price"
                 filled
+                height="50"
               ></v-text-field>
             </v-col>
           </v-card-actions>
@@ -208,6 +217,7 @@
                 label="Publisher"
                 placeholder="Type the publisher's name"
                 filled
+                height="50"
               >
               </v-text-field>
             </v-col>
@@ -222,6 +232,7 @@
                 label="Email"
                 placeholder="Type the publisher's email"
                 filled
+                height="50"
               ></v-text-field>
             </v-col>
           </v-card-actions>
@@ -236,6 +247,7 @@
               label="Address"
               placeholder="Type the publisher's address"
               filled
+              height="50"
             />
             <v-text-field
               name="publisher_contactno"
@@ -246,6 +258,7 @@
               label="Contact Number"
               placeholder="Type the publisher's contact number"
               filled
+              height="50"
             />
           </v-card-actions>
 

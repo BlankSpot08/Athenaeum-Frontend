@@ -14,6 +14,7 @@
             light
             filled
             v-model="search_data.id"
+            height="50"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -22,6 +23,7 @@
             light
             filled
             v-model="search_data.isbn"
+            height="50"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -30,6 +32,7 @@
             light
             filled
             v-model="search_data.title"
+            height="50"
           ></v-text-field>
         </v-card-actions>
 
@@ -54,6 +57,7 @@
                   append-icon="mdi-calendar-range"
                   filled
                   readonly
+                  height="50"
                 ></v-text-field>
               </template>
               <v-date-picker v-model="search_data.date_requested">
@@ -66,7 +70,7 @@
               class="mt-n15"
               width="200"
               color="#D50000"
-              x-large
+              large
               @click="search()"
               >Search</v-btn
             >
@@ -116,13 +120,7 @@
                     v-model="value[`current[${index}]`]"
                   >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        v-bind="attrs"
-                        v-on="on"
-                        small
-                        color="#D50000"
-                        dark
-                      >
+                      <v-btn v-bind="attrs" v-on="on" color="#D50000" dark>
                         Accept
                       </v-btn>
                     </template>
@@ -157,7 +155,7 @@
                             </v-col>
                             <v-col>
                               <v-btn
-                                @click="acceptBookRequest(value)"
+                                @click="acceptBookRequest(value, index)"
                                 color="#D50000"
                                 dark
                               >
@@ -186,6 +184,9 @@ export default {
   name: "AdminReturnConfirmation",
 
   methods: {
+    remove(index) {
+      this.return_requests.data.splice(index, 1);
+    },
     async search() {
       const token = JSON.parse(localStorage.getItem("token"));
 
@@ -218,6 +219,7 @@ export default {
       );
 
       book_request[`current[${index}]`] = false;
+      this.remove(index);
     },
     async getAllReturnRequests() {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -254,3 +256,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.v-text-field .v-input__control .v-input__slot {
+  min-height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 15px;
+}
+</style>

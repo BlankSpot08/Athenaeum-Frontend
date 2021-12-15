@@ -14,6 +14,7 @@
             light
             filled
             v-model="search_data.id"
+            height="50"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -22,6 +23,7 @@
             light
             filled
             v-model="search_data.isbn"
+            height="50"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -30,6 +32,7 @@
             light
             filled
             v-model="search_data.title"
+            height="50"
           ></v-text-field>
         </v-card-actions>
         <v-card-actions class="mt-0">
@@ -53,6 +56,7 @@
                   append-icon="mdi-calendar-range"
                   filled
                   readonly
+                  height="50"
                 ></v-text-field>
               </template>
               <v-date-picker v-model="search_data.date_requested">
@@ -62,10 +66,10 @@
           <v-col></v-col>
           <v-col class="text-right">
             <v-btn
-              class="mt-n15"
+              class="mt-n16"
               width="200"
+              large
               color="#D50000"
-              x-large
               @click="search()"
               >Search</v-btn
             >
@@ -90,7 +94,6 @@
                 <th class="text-subtitle-1 text-left">Date Requested</th>
                 <th class="text-subtitle-1 text-left">Balance</th>
                 <th class="text-subtitle-1 text-left"></th>
-                <th class="text-subtitle-1 text-left"></th>
               </tr>
             </thead>
             <tbody>
@@ -114,14 +117,19 @@
                 <td>
                   {{ value.student.balance }}
                 </td>
-
                 <td class="text-right">
                   <v-dialog
                     max-width="500"
                     v-model="value[`reject_current[${index}]`]"
                   >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn v-bind="attrs" v-on="on" color="#D50000" dark>
+                      <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        color="#D50000"
+                        dark
+                        class="mr-3"
+                      >
                         Reject
                       </v-btn>
                     </template>
@@ -170,9 +178,6 @@
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
-                </td>
-
-                <td class="text-right">
                   <v-dialog
                     max-width="500"
                     v-model="value[`accept_current[${index}]`]"
@@ -205,7 +210,7 @@
                             <v-col class="text-right">
                               <v-btn
                                 @click="
-                                  value[`accept_current[${index}`] = false
+                                  value[`accept_current[${index}]`] = false
                                 "
                                 color="#D50000"
                                 dark
@@ -243,6 +248,9 @@ import axios from "axios";
 export default {
   name: "AdminBorrowConfirmation",
   methods: {
+    remove(index) {
+      this.borrow_requests.data.splice(index, 1);
+    },
     async search() {
       const token = JSON.parse(localStorage.getItem("token"));
 
@@ -275,6 +283,8 @@ export default {
       );
 
       book_request[`accept_current[${index}]`] = false;
+
+      this.remove(index);
     },
     async rejectBookRequest(book_request, index) {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -290,6 +300,8 @@ export default {
       });
 
       book_request[`reject_current[${index}]`] = false;
+
+      this.remove(index);
     },
     async getAllBorrowRequests() {
       const token = JSON.parse(localStorage.getItem("token"));
@@ -327,3 +339,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.v-text-field .v-input__control .v-input__slot {
+  min-height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 15px;
+}
+</style>

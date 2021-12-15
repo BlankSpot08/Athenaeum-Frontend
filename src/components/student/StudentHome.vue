@@ -48,11 +48,35 @@
                     : 0)
               ].image_path
             "
+            :lazy-src="
+              baseline +
+              'image/get/' +
+              temp[i - 1].books.data[
+                j -
+                  1 +
+                  maxCount * (temp[i - 1].current - 1) -
+                  (maxCount * (temp[i - 1].current - 1) + maxCount >
+                    temp[i - 1].books.data.length && temp[i - 1].current != 1
+                    ? maxCount * (temp[i - 1].current - 1) +
+                      maxCount -
+                      temp[i - 1].books.data.length
+                    : 0)
+              ].image_path
+            "
             height="225"
             width="150"
             max-width="161"
             max-height="225"
-          />
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
         </a>
 
         <v-row class="pt-1 pb-0" v-if="j == 1 && temp[i - 1].current > 1">
@@ -75,7 +99,7 @@
           "
         >
           <v-col class="text-right">
-            <a class="pr-6">
+            <a class="">
               <v-btn icon tile dark @click="next(temp[i - 1])">
                 <v-icon color="#999999" x-large dark>
                   mdi-arrow-right-thick
@@ -124,11 +148,11 @@ export default {
       baseline: axios.defaults.baseURL,
       maxCount: 8,
       categories: [
+        "Fantasy",
+        "Psychology",
+        "Technology",
         "Mystery",
-        "Religion",
-        "Adventure/Action",
-        "Adventure/Action",
-        "Adventure/Action",
+        "The Arts",
       ],
     };
   },

@@ -53,6 +53,7 @@
                 background-color="white"
                 light
                 @change="addNewBookCover($event)"
+                height="50"
               >
               </v-file-input>
             </v-col>
@@ -66,6 +67,7 @@
                 background-color="white"
                 label="Category"
                 filled
+                height="50"
               >
               </v-combobox>
             </v-col>
@@ -81,6 +83,7 @@
                 label="ISBN"
                 placeholder="Type the ISBN"
                 filled
+                height="50"
               >
               </v-text-field>
             </v-col>
@@ -88,7 +91,7 @@
               <v-combobox
                 name="tags"
                 class="mx-1"
-                height="10"
+                height="50"
                 background-color="white"
                 light
                 v-model="book.tags"
@@ -125,6 +128,7 @@
                 label="Edition"
                 placeholder="Type the book's edition"
                 filled
+                height="50"
               >
               </v-text-field>
             </v-col>
@@ -148,6 +152,7 @@
                     append-icon="mdi-calendar-range"
                     filled
                     readonly
+                    height="50"
                   ></v-text-field>
                 </template>
                 <v-date-picker v-model="book.publication_year"> </v-date-picker>
@@ -166,6 +171,7 @@
                 label="Title"
                 placeholder="Type the book's title"
                 filled
+                height="50"
               ></v-text-field>
             </v-col>
 
@@ -179,6 +185,7 @@
                 label="Price"
                 placeholder="Type the book's price"
                 filled
+                height="50"
               ></v-text-field>
             </v-col>
           </v-card-actions>
@@ -212,6 +219,7 @@
                 label="Publisher"
                 placeholder="Type the publisher's name"
                 filled
+                height="50"
               >
               </v-text-field>
             </v-col>
@@ -226,6 +234,7 @@
                 label="Email"
                 placeholder="Type the publisher's email"
                 filled
+                height="50"
               ></v-text-field>
             </v-col>
           </v-card-actions>
@@ -240,6 +249,7 @@
               label="Address"
               placeholder="Type the publisher's address"
               filled
+              height="50"
             ></v-text-field>
             <v-text-field
               name="publisher_contactno"
@@ -250,6 +260,7 @@
               label="Contact Number"
               placeholder="Type the publisher's contact number"
               filled
+              height="50"
             ></v-text-field>
           </v-card-actions>
 
@@ -310,7 +321,7 @@
               </tbody>
             </template>
           </v-simple-table>
-          <v-card-actions>
+          <v-card-actions class="mb-16">
             <v-row justify="end" class="mt-n1 mr-1">
               <v-dialog max-width="500" v-model="newAuthor.dialog">
                 <template v-slot:activator="{ on, attrs }">
@@ -318,7 +329,7 @@
                     dark
                     width="110"
                     color="#D50000"
-                    class="mx-1"
+                    class="mx-1 mb-2"
                     v-bind="attrs"
                     v-on="on"
                   >
@@ -333,7 +344,6 @@
                     <v-container>
                       <v-row>
                         <v-col>
-                          <!-- <v-text-field :name="`author[${index}][name]`" placeholder="Name" v-model="newAuthor.name"> -->
                           <v-text-field
                             placeholder="Name"
                             v-model="newAuthor.name"
@@ -374,7 +384,22 @@
               </v-dialog>
             </v-row>
           </v-card-actions>
-          <v-card-actions class="mt-8 ma-1">
+          <v-row justify="center" class="my-n10">
+            <v-col class="mx-3">
+              <v-alert
+                class="my-n7"
+                type="success"
+                :value="alert"
+                transition="scroll-y-reverse-transition"
+                width="100%"
+                dense
+              >
+                Book registration was successful!
+              </v-alert>
+            </v-col>
+          </v-row>
+
+          <v-card-actions class="mt-11 ma-1">
             <v-btn width="285" color="#D50000" type="submit"> Confirm </v-btn>
             <v-btn width="285" color="#D50000" @click="clear()"> Clear </v-btn>
           </v-card-actions>
@@ -401,9 +426,10 @@ export default {
           authorization: `Bearer ${token}`,
         },
       });
-      console.log("here");
 
-      console.log("book registartion was successful");
+      this.alert = !this.alert;
+      this.created();
+      console.log(event);
     },
     getCurrentDate() {
       return new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -418,9 +444,6 @@ export default {
       this.bookCover.url = URL.createObjectURL(this.book.image_path);
 
       this.bookCover.image = event;
-
-      console.log(this.bookCover.url);
-      console.log(this.book.image_path);
     },
     addNewAuthor() {
       this.$set(this.book.authors, this.book.authors.length, {
@@ -460,7 +483,7 @@ export default {
         title: "",
         synopsis: "",
         category: "",
-        publication_year: Date(),
+        publication_year: this.getCurrentDate(),
         tags: [],
         image_path: "",
         authors: [],
@@ -471,6 +494,11 @@ export default {
           contactno: "",
         },
       };
+    },
+    created() {
+      setTimeout(() => {
+        this.alert = false;
+      }, 3000);
     },
   },
   data() {
@@ -533,7 +561,16 @@ export default {
         contactno: "",
         dialog: false,
       },
+      alert: false,
     };
   },
 };
 </script>
+<style scoped>
+.v-text-field .v-input__control .v-input__slot {
+  min-height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 15px;
+}
+</style>

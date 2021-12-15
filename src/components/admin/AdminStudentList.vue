@@ -14,6 +14,7 @@
             light
             filled
             v-model="search_data.id"
+            height="50"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -22,6 +23,7 @@
             light
             filled
             v-model="search_data.name"
+            height="50"
           ></v-text-field>
           <v-text-field
             class="mx-3 mt-n5"
@@ -30,6 +32,7 @@
             light
             filled
             v-model="search_data.address"
+            height="50"
           ></v-text-field>
         </v-card-actions>
         <v-card-actions class="mt-0">
@@ -41,6 +44,7 @@
               light
               filled
               v-model="search_data.contactno"
+              height="50"
             ></v-text-field>
           </v-col>
           <v-col>
@@ -51,6 +55,7 @@
               light
               filled
               v-model="search_data.guardiancontactno"
+              height="50"
             ></v-text-field>
           </v-col>
           <v-col class="text-right">
@@ -58,8 +63,9 @@
               class="mt-n15"
               width="200"
               color="#D50000"
-              x-large
+              large
               @click="search()"
+              height="50"
               >Search</v-btn
             >
           </v-col>
@@ -249,3 +255,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.v-text-field .v-input__control .v-input__slot {
+  min-height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 15px;
+}
+</style>

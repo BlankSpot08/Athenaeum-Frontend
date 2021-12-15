@@ -65,7 +65,7 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
-            <div class="pt-2">
+            <div class="text-body-2 pt-2">
               Availability: {{ count.data.borrowed }}/{{ count.data.total }}
             </div>
           </v-col>
@@ -84,7 +84,7 @@
 
           <v-row>
             <v-col class="text-body-1">
-              <div>ISBN Number: {{ book.data.isbn }}</div>
+              <div class="">ISBN Number: {{ book.data.isbn }}</div>
 
               <div>Title: {{ book.data.title }}</div>
 
@@ -117,7 +117,7 @@
               <div
                 v-for="(author, index) in book.data.authors"
                 :key="index"
-                class="mb-3 pb-2"
+                class="mb-3 pb-2 text-body-1"
                 id="division"
               >
                 <div>Author: {{ author.name }}</div>
@@ -231,6 +231,7 @@ export default {
       );
 
       this.dialog = false;
+      this.$set(this.count.data, "borrowed", this.count.data.borrowed - 1);
     },
   },
   async mounted() {

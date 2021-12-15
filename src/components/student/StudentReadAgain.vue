@@ -23,11 +23,25 @@
               'image/get/' +
               books.data[j + maxCount * (i - 1) - 1].book.image_path
             "
+            :lazy-src="
+              baseline +
+              'image/get/' +
+              books.data[j + maxCount * (i - 1) - 1].book.image_path
+            "
             height="225"
             width="150"
             max-width="161"
             max-height="225"
-          />
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
         </a>
       </v-col>
     </v-row>

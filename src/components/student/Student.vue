@@ -93,17 +93,23 @@
 
     <v-main>
       <v-container class="white--text px-0 mx-0 py-0 my-0" fluid>
-        <router-view :student="student" class="px-10 py-10 px-16" />
+        <router-view class="px-10 py-10 px-16" />
       </v-container>
     </v-main>
+
+    <!-- <v-footer> <Footer/> </v-footer> -->
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
+// import Footer from "../Footer.vue";
 
 export default {
   name: "StudentRegister",
+  components: {
+    // Footer,
+  },
   watch: {
     $route(to) {
       console.log(to);

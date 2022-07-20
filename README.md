@@ -46,3 +46,9 @@ Profile Books Information
 
 Team
 ![Team](https://user-images.githubusercontent.com/40406575/179917106-d8fae688-1627-457e-b249-19f9fbfddc8f.PNG)
+
+Members:
+Jemuel Anacio
+Reuben Palabasan
+Adrian Igama
+Arvin Chu
